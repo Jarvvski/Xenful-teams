@@ -109,6 +109,11 @@ class Teams_Model_Team extends XenForo_Model
 		// TODO get all relations from team ID
 	}
 
+	/**
+	 * Delets a user from a team via removal of relation
+	 * @param  int $teamId
+	 * @return [type]         [description]
+	 */
 	public function deleteTeamUser($teamId)
 	{
 		$relations = $this->getRelationsByTeamId($teamId);
@@ -122,6 +127,12 @@ class Teams_Model_Team extends XenForo_Model
 		}
 	}
 
+	/**
+	 * Add a user to a team by building a relation
+	 *
+	 * @param int $teamId
+	 * @param int $userId
+	 */
 	public function addTeamUser($teamId, $userId)
 	{
 		// TODO add user to team via relation
