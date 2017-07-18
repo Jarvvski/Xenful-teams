@@ -48,6 +48,20 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 		return $this->_getRoleModel()->prepareRole($role);
 	}
 
+	protected function _assertCanManageTeams()
+	{
+		// TODO build functions to assert management of given team
+		// if (!$this->_getTeamModel()->canManageTeam($errorPhraseKey))
+		// {
+		// 	throw $this->getErrorOrNoPermissionResponseException($errorPhraseKey);
+		// }
+	}
+
+	protected function _assertCanManageTeamUsers()
+	{
+		// TODO build functions to assert management of given users in given team
+	}
+
 	/**
 	 * @return Teams_Model_Team
 	 */
