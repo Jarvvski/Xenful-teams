@@ -44,10 +44,22 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 
 		$teamModel = $this->_getTeamModel();
 
+		// TODO perhaps only show teams user can modify? As is 'dashboard'?
+		// Have 'Display' controller show all teams for everyone. Less stress
+		// on db + PHP sorting of large team dataset + admin tools specific to
+		// given visitor
+		
 		$primaryTeam = $teamModel->getPrimaryTeamByUser($visitor['user_id']);
-		$userTeams = $teamModel->getNotPrimaryTeamsByUser($visitor['user_id']);
-		$otherTeams = $teamModel->getNonUserTeams($visitor['user_id']);
+		$otherTeams = $teamModel->getNotPrimaryTeamsByUser($visitor['user_id']);
+		$teams = $teamModel->getNonUserTeams($visitor['user_id']);
 
+		$viewParams = array(
+			'primary_team' => $primary_team,
+			'other_teams' => $othereams,
+			'teams' => $teams
+		);
+
+		return $this->responseView('Teams_ViewPublic_dashboard', 'Teams_dashboard', $viewParams);
 	}
 
 	public function actionCreate()
@@ -63,6 +75,8 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 	public function actionDelete()
 	{
 		// TODO delete team
+
+		$this->_assertCanManageTeams();
 	}
 
 	public function actionSave()
