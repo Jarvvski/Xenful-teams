@@ -2,6 +2,9 @@
 
 class Teams_Model_Team extends XenForo_Model
 {
+
+	$db = $this->_getDb();
+
 	/**
 	 * Get a single team for a given teamID
 	 *
@@ -10,11 +13,11 @@ class Teams_Model_Team extends XenForo_Model
 	 */
 	public function getTeamByIdSimple($teamId)
 	{
-		return $this->_getDb()->fetchRow('
+		return $this->$db->fetchRow('
 			SELECT *
 			FROM xf_teams_teams
-			WHERE team_id = ?
-		', $teamId);
+			WHERE team_id = ' .$this->$db->quote($teamId) .'
+		');
 	}
 
 	/**
@@ -33,7 +36,7 @@ class Teams_Model_Team extends XenForo_Model
 		return $this->fetchAllKeyed('
 			SELECT *
 			FROM xf_teams_teams
-			WHERE team_id IN (' .$this->_getDb()->quote($teamIds) .')
+			WHERE team_id IN (' .$this->$db->quote($teamIds) .')
 		', 'team_id');
 	}
 
@@ -83,7 +86,7 @@ class Teams_Model_Team extends XenForo_Model
 				user.avatar_date, user.gravatar
 			FROM xf_teams_relation AS relation
 			INNER JOIN xf_user AS user ON (user.user_id = relation.user_id)
-			WHERE relation.team_id = ' . $this->_getDb()->quote($teamId). '
+			WHERE relation.team_id = ' . $this->$db->quote($teamId). '
 			ORDER BY user.username
 		', 'user_id');
 	}
@@ -137,6 +140,61 @@ class Teams_Model_Team extends XenForo_Model
 	{
 		// TODO add user to team via relation
 	}
+
+	/**
+	 * Gets the primary team for a given user
+	 *
+	 * @param int  $userId
+	 * @return array team data
+	 */
+	public function getPrimaryTeamByUser($userId)
+	{
+		return $this->$db->fetchRow('
+			SELECT teams.*
+			FROM xf_teams_teams AS teams
+			INNER JOIN xf_teams_relation AS relation
+			ON relation.id = teams.relation_id
+			WHERE relation.user_id = '.$this->$db->quote($userId).'
+			AND relation.primary = TRUE
+		');
+	}
+
+	/**
+	 * Gets all the non-primary teams a given user
+	 *
+	 * @param  int  $userId
+	 * @return array of team arrays (2d)
+	 */
+	public function getNotPrimaryTeamsByUser($userId)
+	{
+		return $this->fetchAllKeyed('
+			SELECT teams.*
+			FROM xf_teams_teams AS teams
+			INNER JOIN xf_teams_relation AS relation
+			ON relation_id = teams.relation_id
+			WHERE relation.user_id = '.$this->$db->quote($userId).'
+			AND relation.primary = FALSE
+		');
+	}
+
+	/**
+	 * Gets all teams except for those of a given user
+	 *
+	 * @param  [type] $userId [description]
+	 * @return [type]         [description]
+	 */
+	public function getNonUserTeams($userId)
+	{
+		return $this->fetchAllKeyed('
+			SELECT teams.*
+			FROM xf_teams_teams AS teams
+			INNER JOIN xf_teams_relation AS relation
+			on relation_id = teams.relation_id
+			WHERE relation.user_id != '.$this->$db->quote($userId).'
+		');
+	}
+
+
 
 
 }
