@@ -68,10 +68,11 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		}
 
 		return $this->fetchAllKeyed('
+		return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_relations
-			WHERE team_id = '.$this->$db->quote($team['team_id']).'
-			AND user_id = '.$this->$db->quote($user['user_id']).'
+			WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
+			AND user_id = '.$this->_getDb()->quote($user['user_id']).'
 		');
 	}
 
