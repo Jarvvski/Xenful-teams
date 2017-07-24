@@ -24,6 +24,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			WHERE relation_id IN (
 				'.$this->$db->quote($roleIds).'
 			)
+			ORDER BY order DESC
 		', 'relation_id');
 	}
 
