@@ -49,7 +49,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		');
 	}
 
-	public function getUserViaRole($role)
+	public function getUserByRole($role)
 	{
 		if (!$role['user_id'])
 		{
