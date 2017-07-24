@@ -48,7 +48,7 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 		// Have 'Display' controller show all teams for everyone. Less stress
 		// on db + PHP sorting of large team dataset + admin tools specific to
 		// given visitor
-		
+
 		$primaryTeam = $teamModel->getPrimaryTeamByUser($visitor['user_id']);
 		$otherTeams = $teamModel->getNotPrimaryTeamsByUser($visitor['user_id']);
 		$teams = $teamModel->getNonUserTeams($visitor['user_id']);
@@ -61,29 +61,4 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 
 		return $this->responseView('Teams_ViewPublic_dashboard', 'Teams_dashboard', $viewParams);
 	}
-
-	public function actionCreate()
-	{
-		// TODO create team
-	}
-
-	public function actionEdit()
-	{
-		// TODO edit team
-	}
-
-	public function actionDelete()
-	{
-		// TODO delete team
-
-		$this->_assertCanManageTeams();
-	}
-
-	public function actionSave()
-	{
-		// TODO save data
-	}
-
-
-
 }
