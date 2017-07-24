@@ -1,14 +1,7 @@
 <?php
 
-class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract {
-
-	protected function _preDispatch($action)
-	{
-		if (XenForo_Application::get('options')->XT_disableTeams)
-		{
-			throw $this->responseException($this->responseError(XenForo_Application::get('options')->XT_DDMessage));
-		}
-	}
+class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
+{
 
 	public function actionView()
 	{
@@ -32,11 +25,14 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract {
 			'canModTeam' => $teamModel->canModTeam();
 		);
 
-		return $this->responseView('Teams_ViewPublic_Index', 'Teams_index', $viewParams);
+		return $this->responseView('Teams_ViewPublic_Team', 'Teams_team_index', $viewParams);
 	}
 
 	public function actionCreate()
 	{
+		// TODO create assertion function
+		$this->_assertCanAdminTeam();
+
 		// TODO specify any variables that need to be in team creation
 		$viewParams = array(
 			'key' => $var
@@ -48,6 +44,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract {
 	public function actionEdit()
 	{
 		$this->_assertCanAdminTeam();
+
 		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
 		$team = $this->_getTeamOrError($teamId);
 
