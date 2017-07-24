@@ -1,5 +1,11 @@
 # New ADR Design document
 
+## XF things needed
+
+- [ ] option XT_disableTeams _global disable XT_
+- [ ] option XT_DDMessage _global message shown while XT is disabled_
+- [ ]
+
 ## Requirements
 
 - scaleable
