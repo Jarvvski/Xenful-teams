@@ -59,5 +59,19 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		$user = $this->_getUserModel()->getUserById($role['user_id']);
 	}
 
+	public function getRoleInTeamForUser(array $team, array $user)
+	{
+		if (!$team || !$user)
+		{
+			return array();
+		}
+
+		return $this->fetchAllKeyed('
+			SELECT *
+			FROM xf_teams_relations
+			WHERE team_id = '.$this->$db->quote($team['team_id']).'
+			AND user_id = '.$this->$db->quote($user['user_id']).'
+		');
+	}
 
 }
