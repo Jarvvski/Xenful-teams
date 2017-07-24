@@ -2,38 +2,113 @@
 
 class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract {
 
-	public function actionIndex()
+	protected function _preDispatch($action)
 	{
-		return $this->responseReroute(__CLASS__, 'team');
+		if (XenForo_Application::get('options')->XT_disableTeams)
+		{
+			throw $this->responseException($this->responseError(XenForo_Application::get('options')->XT_DDMessage));
+		}
 	}
 
-	public function actionTeam()
+	public function actionView()
 	{
-		// TODO display team info for user
+		$teamModel = $this->_getTeamModel();
+		$roleModel = $this->_getRoleModel();
+
+		if (!$teamModel->canViewTeam())
+		{
+			return $this->responseNoPermission();
+		}
+
+		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
+
+		$team = $this->_getTeamOrError($teamId);
+		$roles = $teamModel->getRolesByTeam($team);
+
+		$viewParams = array(
+			'team' => $team,
+			'roles' => $roles,
+			'canAdminTeam' => $teamModel->canAdminTeam();
+			'canModTeam' => $teamModel->canModTeam();
+		);
+
+		return $this->responseView('Teams_ViewPublic_Index', 'Teams_index', $viewParams);
 	}
 
 	public function actionCreate()
 	{
-		// TODO create role
-	}
+		// TODO specify any variables that need to be in team creation
+		$viewParams = array(
+			'key' => $var
+		);
 
-	public function action()
-	{
-		// TODO assign users to role
+		return $this->responseView('Teams_ViewPublic_EditTeam', 'Teams_edit_team', $viewParams);
 	}
 
 	public function actionEdit()
 	{
-		// TODO edit role
+		$this->_assertCanAdminTeam();
+		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
+		$team = $this->_getTeamOrError($teamId);
+
+		$viewParams = array(
+			'team' => $team
+		);
+
+		return $this->responseView('Teams_ViewPublic_EditTeam', 'Teams_edit_team', $viewParams);
 	}
 
 	public function actionDelete()
 	{
-		// TODO delete role
+		$this->_assertCanDeleteTeamData();
+
+		if ($this->isConfirmedPost())
+		{
+			return $this->_deleteData(
+				'Teams_DataWriter_Team', 'team_id',
+				XenForo_Link::buildPublicLink('teams')
+			);
+		} else {
+			$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
+			$team = $this->_getTeamOrError($teamId);
+
+			$viewParams = array(
+				'team' => $team
+			);
+
+			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_delete', $viewParams);
+		}
 	}
 
 	public function actionSave()
 	{
-		// TODO save data
+		$this->_assertPostOnly();
+
+		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
+
+		// TODO specify input items from html form items
+		$input = $this->_input->filter(array(
+			'key1' => XenForo_Input::STRING,
+			'key2' => XenForo_Input::UNUM,
+			'key3' => XenForo_Input::UINT
+		));
+
+		$dw = XenForo_DataWriter::create('Teams_DataWriter_Team');
+
+		if ($teamId)
+		{
+			$dw->setExistingData($teamId);
+		}
+
+		// TODO set DW data specific to team
+
+		$dw->save();
+
+		$team = $dw->getMergedData();
+
+		return $this->responseRedirect(
+			XenForo_ControllerResponse_Redirect::SUCCESS,
+			XenForo_Link::buildPublicLink('teams/view') . $this->getLastHash($team['team_id'])
+		);
 	}
 }
