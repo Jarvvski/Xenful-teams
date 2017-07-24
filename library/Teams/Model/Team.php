@@ -106,6 +106,11 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		$roles = unserialize($team['team_roles']);
 		$roleModel = $this->_getRoleModel();
 		return $roleModel->getRolesById($roles);
+		if (!$roles) {
+			return false;
+		} else {
+			return $roleModel->getRolesById($roles);
+		}
 	}
 
 	/**
