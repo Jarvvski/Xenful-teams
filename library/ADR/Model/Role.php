@@ -27,6 +27,20 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		', 'relation_id');
 	}
 
+	public function getRolesByTeam(array $team)
+	{
+		if (!$team)
+		{
+			return array();
+		}
+
+		return $this->fetchAllKeyed('
+			SELECT *
+			FROM xf_teams_relations
+			WHERE team_id = '.$this->$db->quote($team['team_id']).'
+		');
+	}
+
 	public function getAllRoles()
 	{
 		return $this->fetchAll('
