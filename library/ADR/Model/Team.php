@@ -187,10 +187,21 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	// 	return XenForo_Permission::hasPermission($viewingUser['permissions'], 'general', 'canDonate');
 	// }
 
-	public function _getRoleModel()
+	public function canAdminTeam(array $team)
 	{
-		return $this->getModelFromCache('Teams_Model_Role');
+		$user = XenForo_Visitor::getInstance()->toArray();
+		$roleModel = $this->_getRoleModel();
+
+		$role = $roleModel->getRoleInTeamForUser($team, $user)
+		return $role['admin'];
 	}
 
+	public function canModTeam(array $team)
+	{
+		$user = XenForo_Visitor::getInstance()->toArray();
+		$roleModel = $this->_getRoleModel();
 
+		$role = $roleModel->getRoleInTeamForUser($team, $user)
+		return $role['mod'];
+	}
 }
