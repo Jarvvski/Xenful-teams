@@ -11,4 +11,14 @@ class Teams_Model_Abstract extends XenForo_Model
 	{
 		return $this->getModelFromCache('XenForo_Model_User');
 	}
+
+	protected function _getTeamModel()
+	{
+		return $this->getModelFromCache('Teams_Model_Team');
+	}
+
+	protected function _getRoleModel()
+	{
+		return $this->getModelFromCache('Teams_Model_Role');
+	}
 }
