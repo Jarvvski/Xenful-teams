@@ -1,10 +1,7 @@
 <?php
 
-class Teams_Model_Team extends XenForo_Model
+class Teams_Model_Team extends Teams_Model_Abstract
 {
-
-	$db = $this->_getDb();
-
 	/**
 	 * Get a single team for a given teamID
 	 *
@@ -94,22 +91,21 @@ class Teams_Model_Team extends XenForo_Model
 	/**
 	 * Gets roles availible in team
 	 *
-	 * @param  [type] $teamId [description]
+	 * @param  array
 	 * @return [type]         [description]
 	 */
-	public function getRolesByTeamId($teamId)
+	public function getRolesByTeam(array $team)
 	{
 		// TODO get all roles in team
-	}
 
-	/**
-	 * [getRelationsByTeamId description]
-	 * @param  [type] $teamId [description]
-	 * @return [type]         [description]
-	 */
-	public function getRelationsByTeamId($teamId)
-	{
-		// TODO get all relations from team ID
+		if (!$team)
+		{
+			return array();
+		}
+
+		$roles = unserialize($team['team_roles']);
+		$roleModel = $this->_getRoleModel();
+		return $roleModel->getRolesById($roles);
 	}
 
 	/**
@@ -131,17 +127,6 @@ class Teams_Model_Team extends XenForo_Model
 	}
 
 	/**
-	 * Add a user to a team by building a relation
-	 *
-	 * @param int $teamId
-	 * @param int $userId
-	 */
-	public function addTeamUser($teamId, $userId)
-	{
-		// TODO add user to team via relation
-	}
-
-	/**
 	 * Gets the primary team for a given user
 	 *
 	 * @param int  $userId
@@ -153,7 +138,7 @@ class Teams_Model_Team extends XenForo_Model
 			SELECT teams.*
 			FROM xf_teams_teams AS teams
 			INNER JOIN xf_teams_relation AS relation
-			ON relation.id = teams.relation_id
+			ON relation.team_id = teams.team_id
 			WHERE relation.user_id = '.$this->$db->quote($userId).'
 			AND relation.primary = TRUE
 		');
@@ -194,7 +179,18 @@ class Teams_Model_Team extends XenForo_Model
 		');
 	}
 
+	// TODO make perm functions for can View team / can Admin team etc etc
+	// public function canDonate(&$errorPhraseKey = '', array $viewingUser = null)
+	// {
+	// 	$this->standardizeViewingUserReference($viewingUser);
+	//
+	// 	return XenForo_Permission::hasPermission($viewingUser['permissions'], 'general', 'canDonate');
+	// }
 
+	public function _getRoleModel()
+	{
+		return $this->getModelFromCache('Teams_Model_Role');
+	}
 
 
 }
