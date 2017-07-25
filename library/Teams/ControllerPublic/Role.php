@@ -68,10 +68,14 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 		// TODO specify input items from HTML form items
 		$input = $this->_input->filter(array(
-			'key1' => XenForo_Input::STRING,
-			'key2' => XenForo_Input::UNUM,
-			'key3' => XenForo_Input::UINT
+			'team_id' => XenForo_Input::UINT,
+			'role_title' => XenForo_Input::STRING,
+			'remark' => XenForo_Input::UNUM,
+			'username' => XenForo_Input::UINT,
+			'hierarchy' => XenForo_Input::UINT
 		));
+
+		// TODO check if user has perm to manage role for given team
 
 		$dw = XenForo_DataWriter::create('Teams_DataWriter_Role');
 
