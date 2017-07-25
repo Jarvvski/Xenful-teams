@@ -2,12 +2,13 @@
 
 class Teams_Model_Role extends Teams_Model_Abstract
 {
+
 	public function getRoleByIdSimple($roleId)
 	{
-		return $this->$db->fetchRow('
+		return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_relations
-			WHERE role_id = ' .$this->$db->quote($roleId) .'
+			WHERE role_id = ' .$this->_getDb()->quote($roleId) .'
 		');
 	}
 
@@ -22,9 +23,8 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			SELECT *
 			FROM xf_teams_relations
 			WHERE relation_id IN (
-				'.$this->$db->quote($roleIds).'
+				'.$this->_getDb()->quote($roleIds).'
 			)
-			ORDER BY order DESC
 			ORDER BY hierarchy ASC
 		', 'relation_id');
 	}
@@ -39,8 +39,8 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		return $this->fetchAllKeyed('
 			SELECT *
 			FROM xf_teams_relations
-			WHERE team_id = '.$this->$db->quote($team['team_id']).'
-		');
+			WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
+		', 'team_id');
 	}
 
 	public function getAllRoles()
@@ -68,7 +68,6 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			return array();
 		}
 
-		return $this->fetchAllKeyed('
 		return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_relations

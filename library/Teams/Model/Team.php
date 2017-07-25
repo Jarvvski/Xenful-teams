@@ -2,6 +2,7 @@
 
 class Teams_Model_Team extends Teams_Model_Abstract
 {
+
 	/**
 	 * Get a single team for a given teamID
 	 *
@@ -10,10 +11,10 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 */
 	public function getTeamByIdSimple($teamId)
 	{
-		return $this->$db->fetchRow('
+		return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_teams
-			WHERE team_id = ' .$this->$db->quote($teamId) .'
+			WHERE team_id = ' .$this->_getDb()->quote($teamId) .'
 		');
 	}
 
@@ -33,7 +34,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		return $this->fetchAllKeyed('
 			SELECT *
 			FROM xf_teams_teams
-			WHERE team_id IN (' .$this->$db->quote($teamIds) .')
+			WHERE team_id IN (' .$this->_getDb()->quote($teamIds) .')
 		', 'team_id');
 	}
 
@@ -83,7 +84,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 				user.avatar_date, user.gravatar
 			FROM xf_teams_relation AS relation
 			INNER JOIN xf_user AS user ON (user.user_id = relation.user_id)
-			WHERE relation.team_id = ' . $this->$db->quote($teamId). '
+			WHERE relation.team_id = ' . $this->_getDb()->quote($teamId). '
 			ORDER BY user.username
 		', 'user_id');
 	}
@@ -103,9 +104,10 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			return array();
 		}
 
-		$roles = unserialize($team['team_roles']);
+		// TODO fix unserialization of data
+		// $roles = unserialize($team['team_roles']);
+		$roles = array('1');
 		$roleModel = $this->_getRoleModel();
-		return $roleModel->getRolesById($roles);
 		if (!$roles) {
 			return false;
 		} else {
@@ -139,12 +141,12 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 */
 	public function getPrimaryTeamByUser($userId)
 	{
-		return $this->$db->fetchRow('
+		return $this->_getDb()->fetchRow('
 			SELECT teams.*
 			FROM xf_teams_teams AS teams
 			INNER JOIN xf_teams_relation AS relation
 			ON relation.team_id = teams.team_id
-			WHERE relation.user_id = '.$this->$db->quote($userId).'
+			WHERE relation.user_id = '.$this->_getDb()->quote($userId).'
 			AND relation.primary = TRUE
 		');
 	}
@@ -162,7 +164,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			FROM xf_teams_teams AS teams
 			INNER JOIN xf_teams_relation AS relation
 			ON relation_id = teams.relation_id
-			WHERE relation.user_id = '.$this->$db->quote($userId).'
+			WHERE relation.user_id = '.$this->_getDb()->quote($userId).'
 			AND relation.primary = FALSE
 		');
 	}
@@ -180,7 +182,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			FROM xf_teams_teams AS teams
 			INNER JOIN xf_teams_relation AS relation
 			on relation_id = teams.relation_id
-			WHERE relation.user_id != '.$this->$db->quote($userId).'
+			WHERE relation.user_id != '.$this->_getDb()->quote($userId).'
 		');
 	}
 
@@ -197,7 +199,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		$user = XenForo_Visitor::getInstance()->toArray();
 		$roleModel = $this->_getRoleModel();
 
-		$role = $roleModel->getRoleInTeamForUser($team, $user)
+		$role = $roleModel->getRoleInTeamForUser($team, $user);
 		return $role['admin'];
 	}
 
@@ -206,7 +208,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		$user = XenForo_Visitor::getInstance()->toArray();
 		$roleModel = $this->_getRoleModel();
 
-		$role = $roleModel->getRoleInTeamForUser($team, $user)
+		$role = $roleModel->getRoleInTeamForUser($team, $user);
 		return $role['mod'];
 	}
 }

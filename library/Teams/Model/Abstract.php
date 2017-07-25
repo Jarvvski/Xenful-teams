@@ -2,10 +2,7 @@
 
 class Teams_Model_Abstract extends XenForo_Model
 {
-	/**
-	 * Var to store DB object
-	 */
-	protected $db = $this->_getDb();
+	// protected static $db = $this->_getDb();
 
 	protected function _getUserModel()
 	{
