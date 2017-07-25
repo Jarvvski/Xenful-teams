@@ -80,7 +80,20 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			$dw->setExistingData($relationId);
 		}
 
-		// TODO set DW data specific to role
+		// TODO need to get the user we're going to add to the role
+		// - get user_id
+		// - get username
+		// - store if needed/else null
+
+		$dw->set('team_id', $input['team_id']);
+		$dw->set('user_id', $roleUser['user_id'];
+		$dw->set('username', $input['username']);
+		$dw->set('role_title', $input['role_title']);
+		$dw->set('remark', $input['remark']);
+		$dw->set('admin', false);
+		$dw->set('mod', false);
+		$dw->set('hierarchy', $input['hierarchy']);
+		$dw->set('primary', true);
 
 		$dw->save();
 
