@@ -8,10 +8,10 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$teamModel = $this->_getTeamModel();
 		$roleModel = $this->_getRoleModel();
 
-		if (!$teamModel->canViewTeam())
-		{
-			return $this->responseNoPermission();
-		}
+		// if (!$teamModel->canViewTeam())
+		// {
+		// 	return $this->responseNoPermission();
+		// }
 
 		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
 
