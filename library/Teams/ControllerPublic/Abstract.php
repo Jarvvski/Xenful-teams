@@ -10,15 +10,16 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	 */
 	protected function _preDispatch($action)
 	{
-		if (XenForo_Application::get('options')->XT_disableTeams)
-		{
-			throw $this->responseException($this->responseError(XenForo_Application::get('options')->XT_DDMessage));
-		}
-
-		if (!$this->_getTeamModel()->canViewTeams($errorPhraseKey))
-		{
-			throw $this->getErrorOrNoPermissionResponseException($errorPhraseKey);
-		}
+		// TODO commented out for debug
+		// if (XenForo_Application::get('options')->XT_disableTeams)
+		// {
+		// 	throw $this->responseException($this->responseError(XenForo_Application::get('options')->XT_DDMessage));
+		// }
+		//
+		// if (!$this->_getTeamModel()->canViewTeams($errorPhraseKey))
+		// {
+		// 	throw $this->getErrorOrNoPermissionResponseException($errorPhraseKey);
+		// }
 	}
 
 	/**
