@@ -1,0 +1,41 @@
+<!-- Includes Begin -->
+<xen:require css="CavTools_TigCheck.css" />
+<!-- Includes End   -->
+
+<xen:topctrl>
+	<a href="{xen:link roles/create}" class="button">+ Create Role</a>
+</xen:topctrl>
+
+
+<xen:title>{xen:phrase Teams_team_index_title}</xen:title>
+<div class="section">
+    <xen:title>{xen:raw $team.team_name}</xen:title>
+
+	<table class="tigCheck">
+		<tr>
+			<th>
+				Position
+			</th>
+			<th>
+				Username
+			</th>
+			<th>
+				Remark
+			</th>
+		</tr>
+		<xen:foreach loop="{$roles}" key="{$roleId}" value="{$role}">
+			<tr>
+				<td>
+					<a href="{xen:link 'role/edit', '', 'relation_id={$role.relation_id}'}">{xen:raw $role.role_title}</a>
+				</td>
+				<td>
+					{xen:raw $role.username}
+				</td>
+				<td>
+					{xen:raw $role.remark}
+				</td>
+			</tr>
+		</xen:foreach>
+	</table>
+</div>
+<br />
