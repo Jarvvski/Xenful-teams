@@ -113,6 +113,19 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		} else {
 			return $roleModel->getRolesById($roles);
 		}
+
+		return $this->getTeamMembersByTeamId($team['team_id']);
+
+
+
+		// if ($team['team_roles'] == NULL)
+		// {
+		// 	return null;
+		// } else {
+		// 	$roles = unserialize($team['team_roles']);
+		// 	$roleModel = $this->_getRoleModel();
+		// 	return $roleModel->getRolesById($roles);
+		// }
 	}
 
 	/**
