@@ -20,7 +20,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 	{
 		// TODO: specify any variables needed during role creation
 		$viewParams = array(
-			'key' => $var
+
 		);
 
 		return $this->responseView('Teams_ViewPublic_EditRole', 'Teams_edit_role', $viewParams);
