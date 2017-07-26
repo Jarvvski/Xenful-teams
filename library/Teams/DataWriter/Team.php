@@ -9,13 +9,13 @@ class Teams_DataWriter_Team extends XenForo_DataWriter
 				'team_id' => array('type' => self::TYPE_UINT, 'autoIncrement' => true),
 				'team_name' => array('type' => self::TYPE_STRING, 'required' => true, 'maxLength' => 200),
 				'team_remark' => array('type' => self::TYPE_STRING, 'maxLength' => 240),
-				'managed_teams' => array('type' => self::TYPE_UNKNOWN, 'default' => ''),
-				'team_roles' => array('type' => self::TYPE_UNKNOWN, 'default' => ''),
-				'can_extend' => array('type' => self::TYPE_BOOLEAN, 'default' => 0, 'required' => true),
+				'managed_teams' => array('type' => self::TYPE_UNKNOWN, 'default' => NULL),
+				'team_roles' => array('type' => self::TYPE_UNKNOWN, 'default' => NULL),
+				'can_extend' => array('type' => self::TYPE_UINT, 'default' => 0, 'required' => true),
 				'hierarchy' => array('type' => self::TYPE_UINT, 'required' => true),
 				'parent_id' => array('type' => self::TYPE_UINT, 'required' => true)
 			)
-		)
+		);
 	}
 
 	protected function _getExistingData($data)
