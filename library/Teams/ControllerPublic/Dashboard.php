@@ -17,11 +17,11 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 
 	public function actionDashboard()
 	{
-		// TODO display dashboard for user
+		// TODO: display dashboard for user
 		// Dash will display lists of all current teams
 		// + allow team managers to admin their teams
 
-		// TODO check for team admin or mod perms
+		// TODO: check for team admin or mod perms
 		if (!XenForo_Visitor::getInstance()->hasPermission('XenFullTeams', 'teamAdmin'))
 		{
 			// don't show admin buttons
@@ -34,7 +34,7 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 
 		// Show primary team, then show all other teams in heirarchy order
 
-		// TODO display team stuff
+		// TODO: display team stuff
 		// 1. Find out visitor primary team
 		// 2. Get all other visitor teams
 		// 3. Get teams except for this team
@@ -44,7 +44,7 @@ class Teams_ControllerPublic_Dashboard extends Teams_ControllerPublic_Abstract
 
 		$teamModel = $this->_getTeamModel();
 
-		// TODO perhaps only show teams user can modify? As is 'dashboard'?
+		// TODO: perhaps only show teams user can modify? As is 'dashboard'?
 		// Have 'Display' controller show all teams for everyone. Less stress
 		// on db + PHP sorting of large team dataset + admin tools specific to
 		// given visitor

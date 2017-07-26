@@ -10,7 +10,7 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	 */
 	protected function _preDispatch($action)
 	{
-		// TODO commented out for debug
+		// TODO: commented out for debug
 		// if (XenForo_Application::get('options')->XT_disableTeams)
 		// {
 		// 	throw $this->responseException($this->responseError(XenForo_Application::get('options')->XT_DDMessage));
@@ -56,7 +56,7 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 
 	protected function _assertCanManageTeams()
 	{
-		// TODO build functions to assert management of given team
+		// TODO: build functions to assert management of given team
 		// if (!$this->_getTeamModel()->canManageTeam($errorPhraseKey))
 		// {
 		// 	throw $this->getErrorOrNoPermissionResponseException($errorPhraseKey);
@@ -65,7 +65,7 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 
 	protected function _assertCanManageTeamUsers()
 	{
-		// TODO build functions to assert management of given users in given team
+		// TODO: build functions to assert management of given users in given team
 		// XenForo_Visitor::getInstance()->hasPermission('CavToolsGroupId', 'sendAWOLPM')
 	}
 

@@ -18,7 +18,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 	public function actionCreate()
 	{
-		// TODO specify any variables needed during role creation
+		// TODO: specify any variables needed during role creation
 		$viewParams = array(
 			'key' => $var
 		);
@@ -66,7 +66,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 		$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
 
-		// TODO specify input items from HTML form items
+		// TODO: specify input items from HTML form items
 		$input = $this->_input->filter(array(
 			'team_id' => XenForo_Input::UINT,
 			'role_title' => XenForo_Input::STRING,
@@ -75,7 +75,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			'hierarchy' => XenForo_Input::UINT
 		));
 
-		// TODO check if user has perm to manage role for given team
+		// TODO: check if user has perm to manage role for given team
 
 		$dw = XenForo_DataWriter::create('Teams_DataWriter_Role');
 
@@ -84,7 +84,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			$dw->setExistingData($relationId);
 		}
 
-		// TODO need to get the user we're going to add to the role
+		// TODO: need to get the user we're going to add to the role
 		// - get user_id
 		// - get username
 		// - store if needed/else null

@@ -30,10 +30,10 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function actionCreate()
 	{
-		// TODO create assertion function
+		// TODO: create assertion function
 		$this->_assertCanAdminTeam();
 
-		// TODO specify any variables that need to be in team creation
+		// TODO: specify any variables that need to be in team creation
 		$viewParams = array(
 			'key' => $var
 		);
@@ -83,7 +83,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
 
-		// TODO specify input items from html form items
+		// TODO: specify input items from html form items
 		$input = $this->_input->filter(array(
 			'key1' => XenForo_Input::STRING,
 			'key2' => XenForo_Input::UNUM,
@@ -97,7 +97,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 			$dw->setExistingData($teamId);
 		}
 
-		// TODO set DW data specific to team
+		// TODO: set DW data specific to team
 
 		$dw->save();
 
