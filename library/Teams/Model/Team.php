@@ -105,14 +105,6 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		}
 
 		// TODO: fix unserialization of data
-		// $roles = unserialize($team['team_roles']);
-		$roles = array('1');
-		$roleModel = $this->_getRoleModel();
-		if (!$roles) {
-			return false;
-		} else {
-			return $roleModel->getRolesById($roles);
-		}
 
 		return $this->getTeamMembersByTeamId($team['team_id']);
 
