@@ -31,7 +31,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 	public function actionCreate()
 	{
 		// TODO: create assertion function
-		$this->_assertCanAdminTeam();
+		// $this->_assertCanAdminTeam();
 
 		// TODO: specify any variables that need to be in team creation
 		$viewParams = array(
