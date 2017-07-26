@@ -7,7 +7,6 @@ class Teams_Install {
 		  `team_name` varchar(250) NOT NULL DEFAULT '',
 		  `team_remark` varchar(250) NOT NULL DEFAULT '',
 		  `managed_teams` text,
-		  `team_roles` text,
 		  `can_extend` tinyint(4) NOT NULL,
 		  `hierarchy` int(11) NOT NULL,
 		  `parent_id` int(11) NOT NULL,
