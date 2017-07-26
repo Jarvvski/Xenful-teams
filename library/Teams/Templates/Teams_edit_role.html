@@ -1,0 +1,66 @@
+<!-- Includes Begin -->
+<xen:require css="CavTools_TigCheck.css" />
+<!-- Includes End   -->
+
+
+<xen:title>Create new Team Role</xen:title>
+<div class="section">
+    <xen:title>Create new Team Role</xen:title>
+
+	<!-- Teams_edit_role -->
+
+	<form action="{xen:link role/save}" method="post" class="xenForm AutoValidator" onsubmit="return" data-redirect="on">
+        <h2 class="subHeading">Role Details</h2>
+
+        <dl class="ctrlUnit">
+            <dt><label for="ctrl_message"><b>Role title</b></label></dt>
+            <dd>
+				<input id="ctrl_role_title" type="text" class="textCtrl" name="role_title" value="{$role.role_title}"/>
+			</dd>
+        </dl>
+
+        <dl class="ctrlUnit">
+            <dt><label for="ctrl_message"><b>Username</b></label></dt>
+            <dd>
+				<input id="ctrl_username" type="text" class="textCtrl AutoComplete AcSingle" name="username" value="{$role.username}"/>
+			</dd>
+        </dl>
+
+        <dl class="ctrlUnit">
+            <dt><label for="ctrl_message"><b>Role Remark</b></label></dt>
+            <dd>
+					<input id="ctrl_role_remark" type="text" class="textCtrl" name="remark" value="{$role.remark}"/>
+			</dd>
+        </dl>
+
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">Team</label></dt>
+			<dd><select name="team_id" class="textCtrl" id="ctrl_team_id" required>
+				<xen:foreach loop="{$teams}" value="{$team}">
+					<option value="{$team.team_id}" {xen:selected '{$team.team_id} == {$role.team_id}'}>{$team.team_name}</option>
+				</xen:foreach>
+			</select></dd>
+		</dl>
+
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message"><b>Role functionality:</b></label></dt>
+			<dd><input type="checkbox" name="admin" value="1" {xen:checked "{$role.admin}"} />
+			<input type="checkbox" name="mod" value="1" {xen:checked "{$role.mod}"} /></dd>
+		</dl>
+
+        <dl class="ctrlUnit">
+            <dt><label for="ctrl_message">Node Order</label></dt>
+            <dd><input type="text" name="hierarchy" class="textCtrl" maxlength="4" step="1" pattern="[0-9]{4}" value={$role.hierarchy} required>
+                <p class="explain"><i>Position of Node in chains</i></p>
+            </dd>
+        </dl>
+        <dl class="ctrlUnit submitUnit">
+            <dt></dt>
+            <dd><input type="submit" value="Create role" class="button primary" accesskey="s" /></dd>
+        </dl>
+
+		<input type="hidden" name="relation_id" value="{$role.relation_id}" />
+		<input type="hidden" name="_xfConfirm" value="1" />
+    	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+	</form>
+</div>
