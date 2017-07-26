@@ -8,7 +8,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_relations
-			WHERE role_id = ' .$this->_getDb()->quote($roleId) .'
+			WHERE relation_id = ' .$this->_getDb()->quote($roleId) .'
 		');
 	}
 
