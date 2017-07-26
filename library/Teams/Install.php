@@ -10,6 +10,7 @@ class Teams_Install {
 		  `team_roles` text,
 		  `can_extend` tinyint(4) NOT NULL,
 		  `order` int(11) NOT NULL,
+		  `parent_id` int(11) NOT NULL,
 		  PRIMARY KEY (`team_id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
         'dropTeams' => 'DROP TABLE IF EXISTS `xf_teams_teams`',
