@@ -79,14 +79,14 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		// TODO: might need to include roles for each member
 		// - maybe sepperate function
 
-		return $this->fetchAllKeyed('
+		return $this->_getDb()->fetchAll('
 			SELECT relation.*, user.username,
 				user.avatar_date, user.gravatar
-			FROM xf_teams_relation AS relation
+			FROM xf_teams_relations AS relation
 			INNER JOIN xf_user AS user ON (user.user_id = relation.user_id)
 			WHERE relation.team_id = ' . $this->_getDb()->quote($teamId). '
-			ORDER BY user.username
-		', 'user_id');
+			ORDER BY relation.hierarchy ASC
+		');
 	}
 
 	/**
