@@ -95,12 +95,12 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		// - store if needed/else null
 
 		$dw->set('team_id', $input['team_id']);
-		$dw->set('user_id', $roleUser['user_id'];
+		$dw->set('user_id', 13);
 		$dw->set('username', $input['username']);
 		$dw->set('role_title', $input['role_title']);
 		$dw->set('remark', $input['remark']);
-		$dw->set('admin', false);
-		$dw->set('mod', false);
+		$dw->set('admin', $input['admin']);
+		$dw->set('mod', $input['mod']);
 		$dw->set('hierarchy', $input['hierarchy']);
 		$dw->set('primary', true);
 
