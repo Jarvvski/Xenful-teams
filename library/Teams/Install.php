@@ -9,7 +9,7 @@ class Teams_Install {
 		  `managed_teams` text,
 		  `team_roles` text,
 		  `can_extend` tinyint(4) NOT NULL,
-		  `order` int(11) NOT NULL,
+		  `hierarchy` int(11) NOT NULL,
 		  `parent_id` int(11) NOT NULL,
 		  PRIMARY KEY (`team_id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
@@ -23,7 +23,7 @@ class Teams_Install {
 		  `role_title` varchar(250) NOT NULL DEFAULT '',
 		  `admin` tinyint(4) NOT NULL,
 		  `mod` tinyint(4) NOT NULL,
-		  `order` int(11) NOT NULL,
+		  `hierarchy` int(11) NOT NULL,
 		  `primary` tinyint(4) NOT NULL,
 		  PRIMARY KEY (`relation_id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
