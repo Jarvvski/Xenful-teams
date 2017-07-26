@@ -6,16 +6,16 @@ class Teams_DataWriter_Role extends XenForo_DataWriter
 	{
 		return array(
 			'xf_teams_relations' => array(
-				'relation_id' => array('type' => self::TYPE_UINT, 'autoIncrement' =>),
-				'team_id' => array('type' => self::TYPE_INT),
+				'relation_id' => array('type' => self::TYPE_UINT, 'autoIncrement' => true),
+				'team_id' => array('type' => self::TYPE_INT, 'required' => true),
 				'user_id' => array('type' => self::TYPE_INT),
-				'username' => array('type' => self::TYPE_STRING),
-				'role_title' => array('type' => self::TYPE_STRING),
-				'remark' => array('type' => self::TYPE_STRING),
-				'admin' => array('type' => self::TYPE_BOOL),
-				'mod' => array('type' => self::TYPE_BOOL),
-				'hierarchy' => array('type' => self::TYPE_INT)
-				'primary' => array('type' => self::TYPE_BOOL)
+				'username' => array('type' => self::TYPE_STRING, 'maxLength' => 240),
+				'role_title' => array('type' => self::TYPE_STRING, 'maxLength' => 240, 'required' => true),
+				'remark' => array('type' => self::TYPE_STRING, 'maxLength' => 240),
+				'admin' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 0),
+				'mod' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 0),
+				'hierarchy' => array('type' => self::TYPE_INT, 'required' => true),
+				'primary' => array('type' => self::TYPE_BOOL, 'required' => true, 'default' => 1)
 			)
 		);
 	}
@@ -27,7 +27,7 @@ class Teams_DataWriter_Role extends XenForo_DataWriter
 			return false;
 		}
 
-		return array('xf_teams_relations' => $this->_getRoleModel()->$getRoleById($id));
+		return array('xf_teams_relations' => $this->_getRoleModel()->getRoleByIdSimple($id));
 	}
 
 	protected function _getUpdateCondition($tableName)
