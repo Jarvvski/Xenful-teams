@@ -117,7 +117,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('teams/view') . $this->getLastHash($team['team_id'])
+			XenForo_Link::buildPublicLink('team/view?' . 'team_id=' . $team['team_id'])
 		);
 	}
 }
