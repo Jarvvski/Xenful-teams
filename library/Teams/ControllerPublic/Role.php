@@ -73,9 +73,11 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		$input = $this->_input->filter(array(
 			'team_id' => XenForo_Input::UINT,
 			'role_title' => XenForo_Input::STRING,
-			'remark' => XenForo_Input::UNUM,
-			'username' => XenForo_Input::UINT,
-			'hierarchy' => XenForo_Input::UINT
+			'remark' => XenForo_Input::STRING,
+			'username' => XenForo_Input::STRING,
+			'hierarchy' => XenForo_Input::UINT,
+			'admin' => XenForo_Input::BOOLEAN,
+			'mod' => XenForo_Input::BOOLEAN
 		));
 
 		// TODO: check if user has perm to manage role for given team
