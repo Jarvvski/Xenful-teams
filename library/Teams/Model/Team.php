@@ -76,7 +76,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 */
 	public function getTeamMembersByTeamId($teamId)
 	{
-		// TODO might need to include roles for each member
+		// TODO: might need to include roles for each member
 		// - maybe sepperate function
 
 		return $this->fetchAllKeyed('
@@ -97,14 +97,14 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 */
 	public function getRolesByTeam(array $team)
 	{
-		// TODO get all roles in team
+		// TODO: get all roles in team
 
 		if (!$team)
 		{
 			return array();
 		}
 
-		// TODO fix unserialization of data
+		// TODO: fix unserialization of data
 		// $roles = unserialize($team['team_roles']);
 		$roles = array('1');
 		$roleModel = $this->_getRoleModel();
@@ -126,7 +126,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 
 		foreach ($relations as $relationID => $relation)
 		{
-			// TODO create relation DW
+			// TODO: create relation DW
 			$relationDw = XenForo_DataWriter::create('ADR_DataWriter_TeamUserRelation');
 			$relationDw->setExistingData($userID);
 			$relationDw->delete();
@@ -186,7 +186,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		');
 	}
 
-	// TODO make perm functions for can View team / can Admin team etc etc
+	// TODO: make perm functions for can View team / can Admin team etc etc
 	// public function canDonate(&$errorPhraseKey = '', array $viewingUser = null)
 	// {
 	// 	$this->standardizeViewingUserReference($viewingUser);
