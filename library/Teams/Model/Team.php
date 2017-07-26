@@ -45,7 +45,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 */
 	public function getAllTeams()
 	{
-		return $this->fetchAll('
+		return $this->_getDb()->fetchAll('
 			SELECT *
 			FROM xf_teams_teams
 		');
