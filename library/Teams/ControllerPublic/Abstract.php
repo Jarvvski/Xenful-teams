@@ -51,7 +51,7 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 			throw $this->responseException($this->responseError(new XenForo_Phrase('teams_role_not_found'), 404));
 		}
 
-		return $this->_getRoleModel()->prepareRole($role);
+		return $role;
 	}
 
 	protected function _assertCanManageTeams()
