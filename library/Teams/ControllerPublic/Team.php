@@ -90,9 +90,11 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		// TODO: specify input items from html form items
 		$input = $this->_input->filter(array(
-			'key1' => XenForo_Input::STRING,
-			'key2' => XenForo_Input::UNUM,
-			'key3' => XenForo_Input::UINT
+			'team_name' => XenForo_Input::STRING,
+			'team_remark' => XenForo_Input::STRING,
+			'can_extend' => XenForo_Input::STRING,
+			'hierarchy' => XenForo_Input::UINT,
+			'parent_id' => XenForo_Input::UINT
 		));
 
 		$dw = XenForo_DataWriter::create('Teams_DataWriter_Team');
