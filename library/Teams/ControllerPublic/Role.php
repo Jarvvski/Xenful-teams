@@ -110,7 +110,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('teams/view') . $this->getLastHash($role['team_id'])
+			XenForo_Link::buildPublicLink('team/view?team_id='.$role['team_id'])
 		);
 	}
 }
