@@ -30,9 +30,12 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 	{
 		$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
 		$role = $this->_getTeamRoleOrError($relationId);
+		$teamModel = $this->_getTeamModel();
+		$teams = $teamModel->getAllTeams();
 
 		$viewParams = array(
-			'role' => $role
+			'role' => $role,
+			'teams' => $teams
 		);
 
 		return $this->responseView('Teams_ViewPublic_EditRole', 'Teams_edit_role', $viewParams);
