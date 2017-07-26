@@ -15,7 +15,7 @@ class Teams_DataWriter_Role extends XenForo_DataWriter
 				'admin' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 0),
 				'mod' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 0),
 				'hierarchy' => array('type' => self::TYPE_INT, 'required' => true),
-				'primary' => array('type' => self::TYPE_BOOL, 'required' => true, 'default' => 1)
+				'primary' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 1)
 			)
 		);
 	}
