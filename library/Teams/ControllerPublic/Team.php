@@ -106,6 +106,11 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		// TODO: set DW data specific to team
 
+		$dw->set('team_name', $input['team_name']);
+		$dw->set('team_remark', $input['team_remark']);
+		$dw->set('can_extend', $input['can_extend']);
+		$dw->set('hierarchy', $input['hierarchy']);
+		$dw->set('parent_id', $input['parent_id']);
 		$dw->save();
 
 		$team = $dw->getMergedData();
