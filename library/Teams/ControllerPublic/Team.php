@@ -33,9 +33,12 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		// TODO: create assertion function
 		// $this->_assertCanAdminTeam();
 
+		$teamModel = $this->_getTeamModel();
+		$teams = $teamModel->getAllTeams();
+
 		// TODO: specify any variables that need to be in team creation
 		$viewParams = array(
-			'key' => $var
+			'parents' => $teams
 		);
 
 		return $this->responseView('Teams_ViewPublic_EditTeam', 'Teams_edit_team', $viewParams);
