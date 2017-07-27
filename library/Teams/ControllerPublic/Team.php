@@ -3,6 +3,23 @@
 class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 {
 
+	protected function _preDispatch($action)
+	{
+		// TODO: Chekc if we can abstract out models to this level?
+		// $teamModel = $this->_getTeamModel();
+		// $roleModel = $this->_getRoleModel();
+
+		switch($action)
+		{
+			case 'view':
+				// code to be run before actionView()
+				break;
+			case 'edit':
+				// code to be run before actionEdit()
+				break;
+		}
+	}
+
 	public function actionView()
 	{
 		$teamModel = $this->_getTeamModel();
