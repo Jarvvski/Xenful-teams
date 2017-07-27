@@ -52,6 +52,9 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
 		$team = $this->_getTeamOrError($teamId);
 
+		$teamModel = $this->_getTeamModel();
+		$teams = $teamModel->getAllTeams();
+
 		$viewParams = array(
 			'parents' => $teams,
 			'team' => $team
