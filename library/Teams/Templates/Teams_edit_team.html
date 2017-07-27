@@ -11,38 +11,51 @@
 
 	<form action="{xen:link team/save}" method="post" class="xenForm AutoValidator" onsubmit="return" data-redirect="on">
         <h2 class="subHeading">Team details</h2>
+
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message"><b>Team Name</b></label></dt>
-            <dd><textarea name="team_name" id="ctrl_message" class="textCtrl" rows="1" cols="20" placeholder="..." style="text-transform: capitalize;" required></textarea></dd>
+            <dd>
+				<input id="ctrl_team_name" type="text" class="textCtrl" name="team_name" value="{$team.team_name}"/>
+			</dd>
         </dl>
+
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message"><b>Team Remark</b></label></dt>
-            <dd><textarea name="team_remark" id="ctrl_message" class="textCtrl" rows="1" cols="20" placeholder="..." style="text-transform: capitalize;"></textarea></dd>
+            <dd>
+				<input id="ctrl_team_remark" type="text" class="textCtrl" name="team_remark" value="{$team.team_remark}"/>
+			</dd>
         </dl>
+
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message">Enable node extention</label></dt>
-            <dd><input type="radio" name="can_extend" value="1" required> Yes
+            <dd><input type="radio" name="can_extend" value="1" {xen:checked "{$team.can_extend} == '1'"}/> Yes
                 <br /><br />
-                <input type="radio" name="can_extend" value="0"> No<br></dd>
+                <input type="radio" name="can_extend" value="0" {xen:checked "{$team.can_extend} == '0'"} /> No<br></dd>
         </dl>
+
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_message">Parent Node</label></dt>
 			<dd><select name="parent_id" class="textCtrl" id="ctrl_timezone" required>
 				<xen:foreach loop="{$parents}" value="{$parent}">
-					<option value="{$parent.team_id}">{$parent.team_name}</option>
+					<option value="{$parent.team_id}" {xen:selected '{$parent.team_id} == {$team.team_id}'}>{$parent.team_name}</option>
 				</xen:foreach>
 			</select></dd>
 		</dl>
 
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message">Node Order</label></dt>
-            <dd><input type="text" name="hierarchy" class="textCtrl" maxlength="2" step="1" pattern="[0-9]{2}" required>
+            <dd><input type="text" name="hierarchy" class="textCtrl" value="{$team.hierarchy}" required>
                 <p class="explain"><i>Position of Node in chains</i></p>
             </dd>
         </dl>
+
         <dl class="ctrlUnit submitUnit">
             <dt></dt>
-            <dd><input type="submit" value="Create team" class="button primary" accesskey="s" /></dd>
+            <dd><input type="submit" value="Save team" class="button primary" accesskey="s" /></dd>
         </dl>
+
+		<input type="hidden" name="team_id" value="{$team.team_id}" />
+		<input type="hidden" name="_xfConfirm" value="1" />
+    	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
 	</form>
 </div>
