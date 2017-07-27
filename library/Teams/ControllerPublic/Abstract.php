@@ -8,7 +8,7 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	 * @param  [type] $action [description]
 	 * @return [type]         [description]
 	 */
-	protected function _preDispatch($action)
+	protected function _preDispatchFirst($action)
 	{
 		// TODO: commented out for debug
 		// if (XenForo_Application::get('options')->XT_disableTeams)
