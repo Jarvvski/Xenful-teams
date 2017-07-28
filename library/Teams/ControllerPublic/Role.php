@@ -23,7 +23,8 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 		$role = array(
 			'role_id' => 0,
-			'managed_team_ids' => array()
+			'managed_team_ids' => array(),
+			'assigned_date' => XenForo_Locale::date(XenForo_Application::$time, 'picker')
 		);
 
 		$viewParams = array(
@@ -88,7 +89,8 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			'username' => XenForo_Input::STRING,
 			'hierarchy' => XenForo_Input::UINT,
 			'managed_team_ids' => array(XenForo_Input::UINT, 'array' => true),
-			'primary' => XenForo_Input::BOOLEAN
+			'primary' => XenForo_Input::BOOLEAN,
+			'assigned_date' => XenForo_Input::STRING
 		));
 
 		// TODO: check if user has perm to manage role for given team
