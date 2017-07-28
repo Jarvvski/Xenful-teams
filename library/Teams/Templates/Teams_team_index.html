@@ -26,7 +26,7 @@
 			<xen:foreach loop="{$roles}" key="{$roleId}" value="{$role}">
 				<tr>
 					<td>
-						<a href="{xen:link 'role/edit', '', 'relation_id={$role.relation_id}'}">{xen:raw $role.role_title}</a>
+						<a href="{xen:link 'role/edit', '', 'role_id={$role.role_id}'}">{xen:raw $role.role_title}</a>
 					</td>
 					<td>
 						{xen:raw $role.username}

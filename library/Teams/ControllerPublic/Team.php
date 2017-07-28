@@ -37,9 +37,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		$viewParams = array(
 			'team' => $team,
-			'roles' => $roles,
-			'canAdminTeam' => $teamModel->canAdminTeam($team),
-			'canModTeam' => $teamModel->canModTeam($team)
+			'roles' => $roles
 		);
 
 		return $this->responseView('Teams_ViewPublic_Team', 'Teams_team_index', $viewParams);

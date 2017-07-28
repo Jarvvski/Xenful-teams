@@ -72,7 +72,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 * Get team members via the team they are in
 	 *
 	 * @param  int  $teamId
-	 * @return array  Users contained in relation of given team
+	 * @return array  Users contained in role of given team
 	 */
 	public function getTeamMembersByTeamId($teamId)
 	{
@@ -80,12 +80,12 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		// - maybe sepperate function
 
 		return $this->_getDb()->fetchAll('
-			SELECT relation.*, user.username,
+			SELECT role.*, user.username,
 				user.avatar_date, user.gravatar
-			FROM xf_teams_relations AS relation
-			INNER JOIN xf_user AS user ON (user.user_id = relation.user_id)
-			WHERE relation.team_id = ' . $this->_getDb()->quote($teamId). '
-			ORDER BY relation.hierarchy ASC
+			FROM xf_teams_roles AS role
+			INNER JOIN xf_user AS user ON (user.user_id = role.user_id)
+			WHERE role.team_id = ' . $this->_getDb()->quote($teamId). '
+			ORDER BY role.hierarchy ASC
 		');
 	}
 
@@ -121,20 +121,20 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	}
 
 	/**
-	 * Delets a user from a team via removal of relation
+	 * Delets a user from a team via removal of role
 	 * @param  int $teamId
 	 * @return [type]         [description]
 	 */
 	public function deleteTeamUser($teamId)
 	{
-		$relations = $this->getRelationsByTeamId($teamId);
+		$roles = $this->getrolesByTeamId($teamId);
 
-		foreach ($relations as $relationID => $relation)
+		foreach ($roles as $roleId => $role)
 		{
-			// TODO: create relation DW
-			$relationDw = XenForo_DataWriter::create('ADR_DataWriter_TeamUserRelation');
-			$relationDw->setExistingData($userID);
-			$relationDw->delete();
+			// TODO: create role DW
+			$roleDw = XenForo_DataWriter::create('ADR_DataWriter_TeamUserrole');
+			$roleDw->setExistingData($userID);
+			$roleDw->delete();
 		}
 	}
 
@@ -149,10 +149,10 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		return $this->_getDb()->fetchRow('
 			SELECT teams.*
 			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_relation AS relation
-			ON relation.team_id = teams.team_id
-			WHERE relation.user_id = '.$this->_getDb()->quote($userId).'
-			AND relation.primary = TRUE
+			INNER JOIN xf_teams_role AS role
+			ON role.team_id = teams.team_id
+			WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+			AND role.primary = TRUE
 		');
 	}
 
@@ -167,10 +167,10 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		return $this->fetchAllKeyed('
 			SELECT teams.*
 			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_relation AS relation
-			ON relation_id = teams.relation_id
-			WHERE relation.user_id = '.$this->_getDb()->quote($userId).'
-			AND relation.primary = FALSE
+			INNER JOIN xf_teams_role AS role
+			ON role_id = teams.role_id
+			WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+			AND role.primary = FALSE
 		');
 	}
 
@@ -185,9 +185,9 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		return $this->fetchAllKeyed('
 			SELECT teams.*
 			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_relation AS relation
-			on relation_id = teams.relation_id
-			WHERE relation.user_id != '.$this->_getDb()->quote($userId).'
+			INNER JOIN xf_teams_role AS role
+			on role_id = teams.role_id
+			WHERE role.user_id != '.$this->_getDb()->quote($userId).'
 		');
 	}
 
@@ -199,21 +199,21 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	// 	return XenForo_Permission::hasPermission($viewingUser['permissions'], 'general', 'canDonate');
 	// }
 
-	public function canAdminTeam(array $team)
-	{
-		$user = XenForo_Visitor::getInstance()->toArray();
-		$roleModel = $this->_getRoleModel();
-
-		$role = $roleModel->getRoleInTeamForUser($team, $user);
-		return $role['admin'];
-	}
-
-	public function canModTeam(array $team)
-	{
-		$user = XenForo_Visitor::getInstance()->toArray();
-		$roleModel = $this->_getRoleModel();
-
-		$role = $roleModel->getRoleInTeamForUser($team, $user);
-		return $role['mod'];
-	}
+	// public function canAdminTeam(array $team)
+	// {
+	// 	$user = XenForo_Visitor::getInstance()->toArray();
+	// 	$roleModel = $this->_getRoleModel();
+	//
+	// 	$role = $roleModel->getRoleInTeamForUser($team, $user);
+	// 	return $role['admin'];
+	// }
+	//
+	// public function canModTeam(array $team)
+	// {
+	// 	$user = XenForo_Visitor::getInstance()->toArray();
+	// 	$roleModel = $this->_getRoleModel();
+	//
+	// 	$role = $roleModel->getRoleInTeamForUser($team, $user);
+	// 	return $role['mod'];
+	// }
 }

@@ -42,11 +42,20 @@
 			</select></dd>
 		</dl>
 
-		<dl class="ctrlUnit">
-			<dt><label for="ctrl_message"><b>Role functionality:</b></label></dt>
-			<dd><input type="checkbox" name="admin" value="1" {xen:checked "{$role.admin}"} />
-			<input type="checkbox" name="mod" value="1" {xen:checked "{$role.mod}"} /></dd>
-		</dl>
+		<xen:if is="{$teams}">
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_teams">Managed teams:</label></dt>
+				<dd>
+					<ul>
+						<li><select name="managed_team_ids[]" id="ctrl_managed_team_ids" size="7" multiple="multiple" class="textCtrl" style="min-width: 300px;">
+							<xen:foreach loop="$teams" value="$team">
+								<option value="{$team.team_id}"{xen:selected 'in_array({$team.team_id}, {$role.managed_team_ids})'}>{$team.team_name}</option>
+							</xen:foreach>
+						</select></li>
+					</ul>
+				</dd>
+			</dl>
+		</xen:if>
 
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message">Node Order</label></dt>
@@ -59,7 +68,7 @@
             <dd><input type="submit" value="Create role" class="button primary" accesskey="s" /></dd>
         </dl>
 
-		<input type="hidden" name="relation_id" value="{$role.relation_id}" />
+		<input type="hidden" name="role_id" value="{$role.role_id}" />
 		<input type="hidden" name="_xfConfirm" value="1" />
     	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
 	</form>

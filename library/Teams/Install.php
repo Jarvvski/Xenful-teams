@@ -14,19 +14,18 @@ class Teams_Install {
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
         'dropTeams' => 'DROP TABLE IF EXISTS `xf_teams_teams`',
 
-		'createRelations' => "CREATE TABLE `xf_teams_user_relation` (
-		  `relation_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+		'createroles' => "CREATE TABLE `xf_teams_user_role` (
+		  `role_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 		  `team_id` int(11) NOT NULL,
 		  `user_id` int(11) DEFAULT NULL,
 		  `username` varchar(250) DEFAULT NULL,
 		  `role_title` varchar(250) NOT NULL DEFAULT '',
-		  `admin` tinyint(4) NOT NULL,
-		  `mod` tinyint(4) NOT NULL,
+		  `managed_team_ids` varbinary(255) NOT NULL DEFAULT '',
 		  `hierarchy` int(11) NOT NULL,
 		  `primary` tinyint(4) NOT NULL,
-		  PRIMARY KEY (`relation_id`)
+		  PRIMARY KEY (`role_id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
-		'dropRelations' => 'DROP TABLE IF EXISTS `xf_teams_relations`'
+		'droproles' => 'DROP TABLE IF EXISTS `xf_teams_roles`'
     );
 
     // This is the function to create a table in the database so our addon will work.
@@ -35,7 +34,7 @@ class Teams_Install {
         if ($addon['version_id'] <= 100) {
             $db = XenForo_Application::getDb();
             $db->query(self::$table['createTeams']);
-            $db->query(self::$table['createRelations']);
+            $db->query(self::$table['createroles']);
         }
     }
 
@@ -44,7 +43,7 @@ class Teams_Install {
     {
         $db = XenForo_Application::getDb();
         $db->query(self::$table['dropTeams']);
-		$db->query(self::$table['dropRelations']);
+		$db->query(self::$table['droproles']);
     }
 }
 
