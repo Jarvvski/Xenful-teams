@@ -18,9 +18,17 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 	public function actionCreate()
 	{
-		// TODO: specify any variables needed during role creation
-		$viewParams = array(
+		$teamModel = $this->_getTeamModel();
+		$teams = $teamModel->getAllTeams();
 
+		$role = array(
+			'role_id' => 0,
+			'managed_team_ids' => array()
+		);
+
+		$viewParams = array(
+			'role' => $role,
+			'teams' => $teams
 		);
 
 		return $this->responseView('Teams_ViewPublic_EditRole', 'Teams_edit_role', $viewParams);
