@@ -76,8 +76,19 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		');
 	}
 
-	public function prepareRole(array &$role)
+	public function prepareRoles(array $roles)
 	{
+		foreach ($roles as $role)
+		{
+			$role = $this->prepareRole($role);
+		}
+
+		return $roles;
+	}
+
+	public function prepareRole(array $role)
+	{
+
 		$role['managed_team_ids'] = explode(',', $role['managed_team_ids']);
 		$role['managed_team_ids'] = array_filter($role['managed_team_ids']);
 
