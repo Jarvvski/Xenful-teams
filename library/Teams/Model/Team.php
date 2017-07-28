@@ -104,9 +104,13 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			return array();
 		}
 
-		// TODO: fix unserialization of data
+		// return $this->getTeamMembersByTeamId($team['team_id']);
 
-		return $this->getTeamMembersByTeamId($team['team_id']);
+		return $this->_getDb()->fetchAll('
+					SELECT *
+					FROM xf_teams_roles
+					WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
+		');
 
 
 
