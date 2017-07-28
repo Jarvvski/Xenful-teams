@@ -39,11 +39,9 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 	{
 		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
 		$role = $this->_getTeamRoleOrError($roleId);
-		$teamModel = $this->_getTeamModel();
-		$teams = $teamModel->getAllTeams();
+		$teams = $this->_getTeamModel()->getAllTeams();
 
-		$role['managed_team_ids'] = explode(',', $role['managed_team_ids']);
-		$role['managed_team_ids'] = array_filter($role['managed_team_ids']);
+		$role = $this->_getRoleModel()->prepareRole($role);
 
 		$viewParams = array(
 			'role' => $role,

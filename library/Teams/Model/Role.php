@@ -76,4 +76,15 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		');
 	}
 
+	public function prepareRole(array &$role)
+	{
+		$role['managed_team_ids'] = explode(',', $role['managed_team_ids']);
+		$role['managed_team_ids'] = array_filter($role['managed_team_ids']);
+
+		$assignedDate = new DateTime(date('r', $role['assigned_date']));
+		$role['assigned_date'] = $assignedDate->format('Y-m-d');
+
+		return $role;
+	}
+
 }
