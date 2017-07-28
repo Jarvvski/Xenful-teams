@@ -34,6 +34,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		$team = $this->_getTeamOrError($teamId);
 		$roles = $teamModel->getRolesByTeam($team);
+		$roles = $this->_getRoleModel()->prepareRoles($roles);
 
 		$viewParams = array(
 			'team' => $team,

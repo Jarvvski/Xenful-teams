@@ -29,7 +29,11 @@
 						<a href="{xen:link 'role/edit', '', 'role_id={$role.role_id}'}">{xen:raw $role.role_title}</a>
 					</td>
 					<td>
-						{xen:raw $role.username}
+						<xen:if is="{$role.username} == ''">
+							Un-assigned
+						<xen:else/>
+							{xen:raw $role.username}
+						</xen:if>
 					</td>
 					<td>
 						{xen:raw $role.remark}
