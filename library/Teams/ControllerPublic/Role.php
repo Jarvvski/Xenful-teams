@@ -102,7 +102,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 		if ($input['username'])
 		{
-			$user = $this->getModelFromCache('XenForo_Model_User')->getUserByName($input['username']);
+			$user = $this->_getUserOrError($input);
 			$input['user_id'] = $user['user_id'];
 		}
 
