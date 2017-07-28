@@ -110,7 +110,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$input = $this->_input->filter(array(
 			'team_name' => XenForo_Input::STRING,
 			'team_remark' => XenForo_Input::STRING,
-			'can_extend' => XenForo_Input::STRING,
+			'can_extend' => XenForo_Input::BOOLEAN,
 			'hierarchy' => XenForo_Input::UINT,
 			'parent_id' => XenForo_Input::UINT
 		));

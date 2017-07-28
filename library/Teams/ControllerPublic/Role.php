@@ -88,6 +88,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			'username' => XenForo_Input::STRING,
 			'hierarchy' => XenForo_Input::UINT,
 			'managed_team_ids' => array(XenForo_Input::UINT, 'array' => true),
+			'primary' => XenForo_Input::BOOLEAN
 		));
 
 		// TODO: check if user has perm to manage role for given team
@@ -99,21 +100,13 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			$dw->setExistingData($roleId);
 		}
 
-		// TODO: need to get the user we're going to add to the role
-		// - get user_id
-		// - get username
-		// - store if needed/else null
+		if ($input['username'])
+		{
+			$user = $this->getModelFromCache('XenForo_Model_User')->getUserByName($input['username']);
+			$input['user_id'] = $user['user_id'];
+		}
 
-		// TODO: do bulkSet instead for production
-
-		$dw->set('team_id', $input['team_id']);
-		$dw->set('user_id', 13);
-		$dw->set('username', $input['username']);
-		$dw->set('role_title', $input['role_title']);
-		$dw->set('remark', $input['remark']);
-		$dw->set('managed_team_ids', $input['managed_team_ids']);
-		$dw->set('hierarchy', $input['hierarchy']);
-		$dw->set('primary', true);
+		$dw->bulkSet($input);
 
 		$dw->save();
 

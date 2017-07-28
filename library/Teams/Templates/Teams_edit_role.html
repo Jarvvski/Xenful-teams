@@ -58,11 +58,19 @@
 		</xen:if>
 
         <dl class="ctrlUnit">
+            <dt><label for="ctrl_message">Primary position:</label></dt>
+            <dd><input type="radio" name="primary" value="1" {xen:checked "{$role.primary} == '1'"}/> Yes
+                <br /><br />
+                <input type="radio" name="primary" value="0" {xen:checked "{$role.primary} == '0'"} /> No<br></dd>
+        </dl>
+
+        <dl class="ctrlUnit">
             <dt><label for="ctrl_message">Node Order</label></dt>
-            <dd><input type="text" name="hierarchy" class="textCtrl" maxlength="4" step="1" pattern="[0-9]{4}" value={$role.hierarchy} required>
+            <dd><input type="text" name="hierarchy" class="textCtrl" maxlength="4" step="1" pattern="[0-9]{4}" value="{$role.hierarchy}">
                 <p class="explain"><i>Position of Node in chains</i></p>
             </dd>
         </dl>
+
         <dl class="ctrlUnit submitUnit">
             <dt></dt>
             <dd><input type="submit" value="Create role" class="button primary" accesskey="s" /></dd>
