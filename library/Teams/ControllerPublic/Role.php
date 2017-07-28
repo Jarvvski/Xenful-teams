@@ -104,6 +104,8 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		{
 			$user = $this->_getUserOrError($input);
 			$input['user_id'] = $user['user_id'];
+			$assignedDate = new DateTime("$input[assigned_date]");
+			$input['assigned_date'] = $assignedDate->format('U');
 		}
 
 		$dw->bulkSet($input);

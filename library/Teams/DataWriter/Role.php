@@ -7,16 +7,17 @@ class Teams_DataWriter_Role extends XenForo_DataWriter
 		return array(
 			'xf_teams_roles' => array(
 				'role_id' => array('type' => self::TYPE_UINT, 'autoIncrement' => true),
-				'team_id' => array('type' => self::TYPE_INT, 'required' => true),
-				'user_id' => array('type' => self::TYPE_INT),
+				'team_id' => array('type' => self::TYPE_UINT, 'required' => true),
+				'user_id' => array('type' => self::TYPE_UINT),
 				'username' => array('type' => self::TYPE_STRING, 'maxLength' => 240),
 				'role_title' => array('type' => self::TYPE_STRING, 'maxLength' => 240, 'required' => true),
 				'remark' => array('type' => self::TYPE_STRING, 'maxLength' => 240),
 				'managed_team_ids' => array('type' => self::TYPE_UNKNOWN, 'required' => true, 'default' => '',
 					'verification' => array('$this', '_verifyManagedTeamIds')
 				),
-				'hierarchy' => array('type' => self::TYPE_INT, 'required' => true),
-				'primary' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 1)
+				'hierarchy' => array('type' => self::TYPE_UINT, 'required' => true),
+				'primary' => array('type' => self::TYPE_BOOLEAN, 'required' => true, 'default' => 1),
+				'assigned_date' => array('type' => self::TYPE_UINT),
 			)
 		);
 	}

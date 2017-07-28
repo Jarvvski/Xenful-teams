@@ -23,6 +23,7 @@ class Teams_Install {
 		  `managed_team_ids` varbinary(255) NOT NULL DEFAULT '',
 		  `hierarchy` int(11) NOT NULL,
 		  `primary` tinyint(4) NOT NULL,
+		  `assigned_date` int(11) DEFAULT NULL,
 		  PRIMARY KEY (`role_id`)
 	  ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
 		'droproles' => 'DROP TABLE IF EXISTS `xf_teams_roles`'

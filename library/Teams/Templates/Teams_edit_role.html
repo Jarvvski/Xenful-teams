@@ -64,6 +64,13 @@
                 <input type="radio" name="primary" value="0" {xen:checked "{$role.primary} == '0'"} /> No<br></dd>
         </dl>
 
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_assigned_date">Assigned Date:</label></dt>
+			<dd>
+				<input id="ctrl_assigned_date" type="date" class="textCtrl autoSize" name="assigned_date" value="{$role.assigned_date}"/>
+			</dd>
+		</dl>
+
         <dl class="ctrlUnit">
             <dt><label for="ctrl_message">Node Order</label></dt>
             <dd><input type="text" name="hierarchy" class="textCtrl" maxlength="4" step="1" pattern="[0-9]{4}" value="{$role.hierarchy}">
