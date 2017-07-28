@@ -41,6 +41,9 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		$teamModel = $this->_getTeamModel();
 		$teams = $teamModel->getAllTeams();
 
+		$role['managed_team_ids'] = explode(',', $role['managed_team_ids']);
+		$role['managed_team_ids'] = array_filter($role['managed_team_ids']);
+
 		$viewParams = array(
 			'role' => $role,
 			'teams' => $teams
