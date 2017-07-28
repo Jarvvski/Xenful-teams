@@ -5,9 +5,9 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 	public function actionView()
 	{
-		$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
 
-		$role = $this->_getTeamRoleOrError($relationId);
+		$role = $this->_getTeamRoleOrError($roleId);
 
 		$viewParams = array(
 			'role' => $role
@@ -36,8 +36,8 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 
 	public function actionEdit()
 	{
-		$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
-		$role = $this->_getTeamRoleOrError($relationId);
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+		$role = $this->_getTeamRoleOrError($roleId);
 		$teamModel = $this->_getTeamModel();
 		$teams = $teamModel->getAllTeams();
 
@@ -59,12 +59,12 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		if ($this->isConfirmedPost())
 		{
 			return $this->_deleteData(
-				'Teams_DataWriter_Role', 'relation_id',
+				'Teams_DataWriter_Role', 'role_id',
 				XenForo_Link::buildPublicLink('teams')
 			);
 		} else {
-			$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
-			$role = $this->_getTeamRoleOrError($relationId);
+			$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+			$role = $this->_getTeamRoleOrError($roleId);
 
 			$viewParams = array(
 				'role' => $role
@@ -78,7 +78,7 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 	{
 		$this->_assertPostOnly();
 
-		$relationId = $this->_input->filterSingle('relation_id', XenForo_Input::UINT);
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
 
 		// TODO: specify input items from HTML form items
 		$input = $this->_input->filter(array(
@@ -87,17 +87,16 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 			'remark' => XenForo_Input::STRING,
 			'username' => XenForo_Input::STRING,
 			'hierarchy' => XenForo_Input::UINT,
-			'admin' => XenForo_Input::BOOLEAN,
-			'mod' => XenForo_Input::BOOLEAN
+			'managed_team_ids' => array(XenForo_Input::UINT, 'array' => true),
 		));
 
 		// TODO: check if user has perm to manage role for given team
 
 		$dw = XenForo_DataWriter::create('Teams_DataWriter_Role');
 
-		if ($relationId)
+		if ($roleId)
 		{
-			$dw->setExistingData($relationId);
+			$dw->setExistingData($roleId);
 		}
 
 		// TODO: need to get the user we're going to add to the role
@@ -105,13 +104,14 @@ class Teams_ControllerPublic_Role extends Teams_ControllerPublic_Abstract
 		// - get username
 		// - store if needed/else null
 
+		// TODO: do bulkSet instead for production
+
 		$dw->set('team_id', $input['team_id']);
 		$dw->set('user_id', 13);
 		$dw->set('username', $input['username']);
 		$dw->set('role_title', $input['role_title']);
 		$dw->set('remark', $input['remark']);
-		$dw->set('admin', $input['admin']);
-		$dw->set('mod', $input['mod']);
+		$dw->set('managed_team_ids', $input['managed_team_ids']);
 		$dw->set('hierarchy', $input['hierarchy']);
 		$dw->set('primary', true);
 
