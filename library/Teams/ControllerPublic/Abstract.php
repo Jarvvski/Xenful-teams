@@ -54,6 +54,44 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 		return $role;
 	}
 
+	/**
+	 * Gets a user via a user array containing either the username index
+	 * or the user_id index
+	 *
+	 * @param  array $input an incomplete user record
+	 * @return array        a complete user record
+	 */
+	protected function _getUserOrError(array $input)
+	{
+		if ($input['username'])
+		{
+			$user = $this->_getUserModel()->getUserByName($input['username']);
+
+			if (!empty($user))
+			{
+				return $user;
+			}
+
+			$errorData = $input['username'];
+		}
+
+		if ($input['user_id'])
+		{
+			$user = $this->_getUserModel()->getUserById($input['user_id']);
+
+			if (!empty($user))
+			{
+				return $user;
+			}
+
+			$errorData = $input['user_id'];
+		}
+
+		throw $this->responseException($this->responseError(new XenForo_Phrase(
+			'requested_user_x_not_found', array('name' => $errorData)
+		)));
+	}
+
 	protected function _assertCanManageTeams()
 	{
 		// TODO: build functions to assert management of given team
