@@ -72,15 +72,9 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	 * @param  array/data Obj  $team
 	 * @return array  team prepared
 	 */
-	public function prepareTeam($team)
+	public function prepareTeam(&$team)
 	{
-		if (!isset($team['fieldCache'])) {
-			$team['fieldCache'] = @unserialize($team['field_cache']);
-
-			if (!is_array($team['fieldCache'])) {
-				$team['fieldCache'] = array();
-			}
-		}
+		$team['roles'] = $this->getRolesByTeam($team);
 		return $team;
 	}
 
