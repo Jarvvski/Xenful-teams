@@ -196,6 +196,47 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		');
 	}
 
+	public function prepareTeamForOrg($team)
+	{
+		$roleData = "";
+
+		$roles = $this->getRolesByTeam($team);
+
+		foreach($roles as $role)
+		{
+			if ($role['username'] == '')
+			{
+				$role['username'] = "Vacant";
+			}
+			$roleData .= "<tr><td>".$role['role_title']."</td><td>".$role['username']."</td></tr>";
+		}
+
+		$data = "<h5>".$team['team_name']."</h5>
+			<table>
+				<tr>
+
+				</tr>
+				".
+				$roleData
+				."
+			</table>
+		";
+
+		$row = array(
+			'c' => array(
+				0 => array(
+					'v' => $team['team_id'],
+					'f' => $data
+				),
+				1 => array(
+					'v' => $team['parent_id']
+				)
+			)
+		);
+
+		return $row;
+	}
+
 	// TODO: make perm functions for can View team / can Admin team etc etc
 	// public function canDonate(&$errorPhraseKey = '', array $viewingUser = null)
 	// {
