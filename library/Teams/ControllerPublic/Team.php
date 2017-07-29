@@ -156,4 +156,12 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 	{
 
 	}
+
+
+	public function actionOrg()
+	{
+		$viewParams = array();
+
+		return $this->responseView('Teams_ViewPublic_Org', 'Teams_org_index', $viewParams);
+	}
 }
