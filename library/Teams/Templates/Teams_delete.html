@@ -2,13 +2,13 @@
 <xen:require css="delete_confirmation.css" />
 
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link full:team, $team}">{$team.team_name}</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link full:teams, $team}">{$team.team_name}</xen:breadcrumb>
 </xen:navigation>
 
-<form action="{xen:link 'teams/delete'}" method="post" class="xenForm formOverlay deleteConfirmForm AutoValidator" data-redirect="{xen:if $isOverlay, no, yes}" data-reset="{xen:if $isOverlay, yes, no}">
+<form action="{xen:link 'teams/team-delete'}" method="post" class="xenForm formOverlay deleteConfirmForm AutoValidator" data-redirect="{xen:if $isOverlay, no, yes}" data-reset="{xen:if $isOverlay, yes, no}">
 
     <p>Please confirm that you wish to delete the following team</p>
-	<strong><a href="{xen:link 'teams/view', '', 'team_id={$team.team_id}'}">{$team.team_name}</a></strong>
+	<strong><a href="{xen:link 'teams/team-view', '', 'team_id={$team.team_id}'}">{$team.team_name}</a></strong>
 
     <dl class="ctrlUnit submitUnit">
         <dt></dt>

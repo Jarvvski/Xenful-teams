@@ -20,7 +20,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		}
 	}
 
-	public function actionView()
+	public function actionTeamView()
 	{
 		$teamModel = $this->_getTeamModel();
 		$roleModel = $this->_getRoleModel();
@@ -44,7 +44,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		return $this->responseView('Teams_ViewPublic_Team', 'Teams_team_index', $viewParams);
 	}
 
-	public function actionCreate()
+	public function actionTeamCreate()
 	{
 		// TODO: create assertion function
 		// $this->_assertCanAdminTeam();
@@ -60,7 +60,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		return $this->responseView('Teams_ViewPublic_EditTeam', 'Teams_edit_team', $viewParams);
 	}
 
-	public function actionEdit()
+	public function actionTeamEdit()
 	{
 		// TODO: create assertion function
 		// $this->_assertCanAdminTeam();
@@ -79,7 +79,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		return $this->responseView('Teams_ViewPublic_EditTeam', 'Teams_edit_team', $viewParams);
 	}
 
-	public function actionDelete()
+	public function actionTeamDelete()
 	{
 
 		// TODO: create assertion for deletion of data
@@ -113,7 +113,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		}
 	}
 
-	public function actionSave()
+	public function actionTeamSave()
 	{
 		$this->_assertPostOnly();
 
@@ -148,7 +148,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('teams/view?' . 'team_id=' . $team['team_id'])
+			XenForo_Link::buildPublicLink('teams/team-view?' . 'team_id=' . $team['team_id'])
 		);
 	}
 
@@ -316,7 +316,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('teams/view?team_id='.$role['team_id'])
+			XenForo_Link::buildPublicLink('teams/team-view?team_id='.$role['team_id'])
 		);
 	}
 }
