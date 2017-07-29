@@ -4,7 +4,7 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
 	var jsonData = $.ajax({
-		url: "team/OrgJson",
+		url: "teams/OrgJson",
 		dataType: "json",
 		async: false
 	}).responseText;
