@@ -116,22 +116,13 @@ class Teams_Model_Team extends Teams_Model_Abstract
 
 		// return $this->getTeamMembersByTeamId($team['team_id']);
 
-		return $this->_getDb()->fetchAll('
+		$roles = $this->_getDb()->fetchAll('
 					SELECT *
 					FROM xf_teams_roles
 					WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
 		');
-
-
-
-		// if ($team['team_roles'] == NULL)
-		// {
-		// 	return null;
-		// } else {
-		// 	$roles = unserialize($team['team_roles']);
-		// 	$roleModel = $this->_getRoleModel();
-		// 	return $roleModel->getRolesById($roles);
-		// }
+		
+		return $this->_getRoleModel()->prepareRoles($roles);
 	}
 
 	/**
