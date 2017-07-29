@@ -52,6 +52,21 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		');
 	}
 
+	public function getChildren(array $team)
+	{
+		if (!$team)
+		{
+			return array();
+		}
+
+		return $this->_getDb()->fetchAll('
+			SELECT *
+			FROM xf_teams_teams
+			WHERE parent_id = ' . $this->_getDb()->quote($team['team_id']). '
+			ORDER BY hierarchy ASC
+		');
+	}
+
 	/**
 	 * Prepare Team for sending and add to cache
 	 * @param  array/data Obj  $team
