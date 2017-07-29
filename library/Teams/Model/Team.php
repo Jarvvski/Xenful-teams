@@ -52,9 +52,9 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		');
 	}
 
-	public function getBaseTeam()
+	public function getBaseTeams()
 	{
-		return $this->_getDb()->fetchRow('
+		return $this->_getDb()->fetchAll('
 			SELECT *
 			FROM xf_teams_teams
 			WHERE parent_id = 0
@@ -130,7 +130,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 					FROM xf_teams_roles
 					WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
 		');
-		
+
 		return $this->_getRoleModel()->prepareRoles($roles);
 	}
 

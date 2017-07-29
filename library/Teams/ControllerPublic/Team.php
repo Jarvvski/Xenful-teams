@@ -164,23 +164,19 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function actionList()
 	{
-		// TODO: action for displaying vertical list of ADR similar to older -v
-
-		// 1. Get Base node
-		// 2. Follow children in order of hierarchy
-
 		$teams = array();
 
-		$base = $this->_getTeamModel()->getBaseTeam();
+		$bases = $this->_getTeamModel()->getBaseTeams();
 
-		$this->sortChildren($base, $teams);
+		foreach($bases as $base)
+		{
+			$this->sortChildren($base, $teams);
+		}
 
 		$viewParams = array(
 			'teams' => $teams
 		);
-
-		// $this->_routeMatch->setResponseType('json');
-		// return $this->responseView('Teams_ViewPublic_Org_Json', '', $teams);
+		
 		return $this->responseView('Teams_ViewPublic_index', 'Teams_index', $viewParams);
 	}
 
