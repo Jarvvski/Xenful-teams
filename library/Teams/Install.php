@@ -21,13 +21,25 @@ class Teams_Install {
 			`username` varchar(250) DEFAULT NULL,
 			`role_title` varchar(250) NOT NULL DEFAULT '',
 			`abreviation` varchar(250) NOT NULL DEFAULT '',
+			`remark` mediumtext,
 			`managed_team_ids` varbinary(255) NOT NULL DEFAULT '',
 			`hierarchy` int(11) NOT NULL,
 			`primary` tinyint(4) NOT NULL,
 			`assigned_date` int(11) DEFAULT NULL,
 			PRIMARY KEY (`role_id`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8",
-		'droproles' => 'DROP TABLE IF EXISTS `xf_teams_roles`'
+		'droproles' => 'DROP TABLE IF EXISTS `xf_teams_roles`',
+
+		'createblueprints' => "CREATE TABLE `xf_teams_blueprint_role` (
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`title` varchar(250) NOT NULL DEFAULT '',
+			`remark` mediumtext,
+			`abreviation` varchar(250) NOT NULL DEFAULT '',
+			`primary` tinyint(4) NOT NULL,
+			`user_id` int(11) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+		'dropbblueprints' => 'DROP TABLE IF EXISTS `xf_teams_blueprint_role`'
 	);
 
 	// This is the function to create a table in the database so our addon will work.
@@ -37,6 +49,7 @@ class Teams_Install {
 			$db = XenForo_Application::getDb();
 			$db->query(self::$table['createTeams']);
 			$db->query(self::$table['createroles']);
+			$db->query(self::$table['createblueprints']);
 		}
 	}
 
@@ -46,6 +59,7 @@ class Teams_Install {
 		$db = XenForo_Application::getDb();
 		$db->query(self::$table['dropTeams']);
 		$db->query(self::$table['droproles']);
+		$db->query(self::$table['dropbblueprints']);
 	}
 }
 

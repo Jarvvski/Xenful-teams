@@ -96,4 +96,13 @@ class Teams_Model_Role extends Teams_Model_Abstract
 
 			return $role;
 		}
+
+		public function getBluePrintByIdSimple($id)
+		{
+			return $this->_getDb()->fetchRow('
+			SELECT *
+			FROM xf_teams_blueprint_role
+			WHERE id = ' .$this->_getDb()->quote($Id) .'
+			');			
+		}
 	}

@@ -143,7 +143,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		// TODO: set DW data specific to team
 
 		$dw->bulkSet($input);
-		
+
 		$dw->save();
 
 		$team = $dw->getMergedData();
@@ -362,6 +362,58 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
 			XenForo_Link::buildPublicLink('teams/team-view?team_id='.$role['team_id'])
+		);
+	}
+
+	public function actionBlueprintCreate()
+	{
+		// TODO: create blueprint
+	}
+
+	public function actionBlueprintEdit()
+	{
+		// TODO: edit blueprint
+	}
+
+	public function actionBlueprintDelete()
+	{
+		// TODO: delete blueprint
+	}
+
+	public function actionBlueprintSave()
+	{
+		$this->_assertPostOnly();
+
+		$id = $this->_input->filterSingle('id', XenForo_Input::UINT);
+
+		// TODO: specify input items from HTML form items
+		$input = $this->_input->filter(array(
+			'title' => XenForo_Input::STRING,
+			'abreviation' => XenForo_Input::STRING,
+			'remark' => XenForo_Input::STRING,
+			'primary' => XenForo_Input::BOOLEAN,
+		));
+
+		// TODO: check if user has perm to manage role for given team
+
+		$dw = XenForo_DataWriter::create('Teams_DataWriter_BluePrint');
+
+		if ($id)
+		{
+			$dw->setExistingData($id);
+		}
+
+		$input['user_id'] = XenForo_Visitor::getUserId();
+
+		$dw->bulkSet($input);
+
+		$dw->save();
+
+		$blueprint = $dw->getMergedData();
+
+		return $this->responseRedirect(
+			XenForo_ControllerResponse_Redirect::SUCCESS,
+			XenForo_Link::buildPublicLink('teams/dash')
 		);
 	}
 }
