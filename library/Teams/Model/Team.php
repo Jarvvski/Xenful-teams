@@ -52,6 +52,15 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		');
 	}
 
+	public function getBaseTeam()
+	{
+		return $this->_getDb()->fetchRow('
+			SELECT *
+			FROM xf_teams_teams
+			WHERE parent_id = 0
+		');
+	}
+
 	public function getChildren(array $team)
 	{
 		if (!$team)
