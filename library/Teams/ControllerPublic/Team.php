@@ -164,4 +164,38 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		return $this->responseView('Teams_ViewPublic_Org', 'Teams_org_index', $viewParams);
 	}
+
+	public function actionOrgJson()
+	{
+		$data = array(
+			'cols' => array(),
+			'rows' => array()
+		);
+
+		$data['cols'] = array(
+			0 => array(
+				'id' => '',
+   				'label' => 'Name',
+   				'pattern' => '',
+   				'type' => 'string',
+			),
+			1 => array(
+				'id' => '',
+   				'label' => 'Parent',
+   				'pattern' => '',
+   				'type' => 'string',
+			)
+		);
+
+		$teams = $this->_getTeamModel()->getAllTeams();
+
+		foreach ($teams as $team)
+		{
+			$row = $this->_getTeamModel()->prepareTeamForOrg($team);
+			array_push($data['rows'], $row);
+		}
+
+    	$this->_routeMatch->setResponseType('json');
+    	return $this->responseView('Teams_ViewPublic_Org_Json', '', $data);
+	}
 }
