@@ -197,5 +197,120 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
     	$this->_routeMatch->setResponseType('json');
     	return $this->responseView('Teams_ViewPublic_Org_Json', '', $data);
+	public function actionRoleView()
+	{
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+
+		$role = $this->_getTeamRoleOrError($roleId);
+
+		$viewParams = array(
+			'role' => $role
+		);
+
+		return $this->responseView('Teams_ViewPublic_Role', 'Teams_role_index', $viewParams);
+	}
+
+	public function actionRoleCreate()
+	{
+		$teamModel = $this->_getTeamModel();
+		$teams = $teamModel->getAllTeams();
+
+		$role = array(
+			'role_id' => 0,
+			'managed_team_ids' => array(),
+			'assigned_date' => XenForo_Locale::date(XenForo_Application::$time, 'picker')
+		);
+
+		$viewParams = array(
+			'role' => $role,
+			'teams' => $teams
+		);
+
+		return $this->responseView('Teams_ViewPublic_EditRole', 'Teams_edit_role', $viewParams);
+	}
+
+	public function actionRoleEdit()
+	{
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+		$role = $this->_getTeamRoleOrError($roleId);
+		$teams = $this->_getTeamModel()->getAllTeams();
+
+		$role = $this->_getRoleModel()->prepareRole($role);
+
+		$viewParams = array(
+			'role' => $role,
+			'teams' => $teams
+		);
+
+		return $this->responseView('Teams_ViewPublic_EditRole', 'Teams_edit_role', $viewParams);
+	}
+
+	public function actionRoleDelete()
+	{
+		$this->_assertCanDeleteTeamData();
+
+		if ($this->isConfirmedPost())
+		{
+			return $this->_deleteData(
+				'Teams_DataWriter_Role', 'role_id',
+				XenForo_Link::buildPublicLink('teams')
+			);
+		} else {
+			$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+			$role = $this->_getTeamRoleOrError($roleId);
+
+			$viewParams = array(
+				'role' => $role
+			);
+
+			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_delete', $viewParams);
+		}
+	}
+
+	public function actionRoleSave()
+	{
+		$this->_assertPostOnly();
+
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+
+		// TODO: specify input items from HTML form items
+		$input = $this->_input->filter(array(
+			'team_id' => XenForo_Input::UINT,
+			'role_title' => XenForo_Input::STRING,
+			'remark' => XenForo_Input::STRING,
+			'username' => XenForo_Input::STRING,
+			'hierarchy' => XenForo_Input::UINT,
+			'managed_team_ids' => array(XenForo_Input::UINT, 'array' => true),
+			'primary' => XenForo_Input::BOOLEAN,
+			'assigned_date' => XenForo_Input::STRING
+		));
+
+		// TODO: check if user has perm to manage role for given team
+
+		$dw = XenForo_DataWriter::create('Teams_DataWriter_Role');
+
+		if ($roleId)
+		{
+			$dw->setExistingData($roleId);
+		}
+
+		if ($input['username'])
+		{
+			$user = $this->_getUserOrError($input);
+			$input['user_id'] = $user['user_id'];
+			$assignedDate = new DateTime("$input[assigned_date]");
+			$input['assigned_date'] = $assignedDate->format('U');
+		}
+
+		$dw->bulkSet($input);
+
+		$dw->save();
+
+		$role = $dw->getMergedData();
+
+		return $this->responseRedirect(
+			XenForo_ControllerResponse_Redirect::SUCCESS,
+			XenForo_Link::buildPublicLink('teams/view?team_id='.$role['team_id'])
+		);
 	}
 }
