@@ -81,23 +81,35 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function actionDelete()
 	{
-		$this->_assertCanDeleteTeamData();
+
+		// TODO: create assertion for deletion of data
+		// $this->_assertCanDeleteTeamData();
+
+		$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
+		$team = $this->_getTeamOrError($teamId);
 
 		if ($this->isConfirmedPost())
 		{
-			return $this->_deleteData(
-				'Teams_DataWriter_Team', 'team_id',
-				XenForo_Link::buildPublicLink('teams')
+			$dw = XenForo_DataWriter::create('Teams_DataWriter_Team');
+			$dw->setExistingData($team['team_id']);
+
+			$dw->delete();
+
+			XenForo_Model_Log::logModeratorAction(
+				'team', $team, 'removed', array(), $team
+			);
+
+			return $this->responseRedirect(
+				XenForo_ControllerResponse_Redirect::SUCCESS,
+				XenForo_Link::buildPublicLink('team/org')
 			);
 		} else {
-			$teamId = $this->_input->filterSingle('team_id', XenForo_Input::UINT);
-			$team = $this->_getTeamOrError($teamId);
 
 			$viewParams = array(
 				'team' => $team
 			);
 
-			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_delete', $viewParams);
+			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_team_delete', $viewParams);
 		}
 	}
 
