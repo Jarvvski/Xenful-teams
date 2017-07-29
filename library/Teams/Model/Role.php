@@ -90,17 +90,10 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		{
 			$role['managed_team_ids'] = explode(',', $role['managed_team_ids']);
 			$role['managed_team_ids'] = array_filter($role['managed_team_ids']);
-			$role['managed'] = array();
-			$role['managed'] = $role['managed_team_ids'];
+
 			$assignedDate = new DateTime(date('r', $role['assigned_date']));
 			$role['assigned_date'] = $assignedDate->format('Y-m-d');
 
-			if ($role['username'] == null)
-			{
-				$role['username'] = "Vacant";
-			}
-
 			return $role;
 		}
-
 	}
