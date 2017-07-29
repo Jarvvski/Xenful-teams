@@ -12,11 +12,11 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		switch($action)
 		{
 			case 'view':
-				// code to be run before actionView()
-				break;
+			// code to be run before actionView()
+			break;
 			case 'edit':
-				// code to be run before actionEdit()
-				break;
+			// code to be run before actionEdit()
+			break;
 		}
 	}
 
@@ -101,7 +101,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 			return $this->responseRedirect(
 				XenForo_ControllerResponse_Redirect::SUCCESS,
-				XenForo_Link::buildPublicLink('team/org')
+				XenForo_Link::buildPublicLink('teams/org')
 			);
 		} else {
 
@@ -148,15 +148,19 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('team/view?' . 'team_id=' . $team['team_id'])
+			XenForo_Link::buildPublicLink('teams/view?' . 'team_id=' . $team['team_id'])
 		);
 	}
 
 	public function actionDash()
 	{
-
+		// TODO: action for displaying user graph
 	}
 
+	public function actionList()
+	{
+		// TODO: action for displaying vertical list of ADR similar to older -v
+	}
 
 	public function actionOrg()
 	{
@@ -175,15 +179,15 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$data['cols'] = array(
 			0 => array(
 				'id' => '',
-   				'label' => 'Name',
-   				'pattern' => '',
-   				'type' => 'string',
+				'label' => 'Name',
+				'pattern' => '',
+				'type' => 'string',
 			),
 			1 => array(
 				'id' => '',
-   				'label' => 'Parent',
-   				'pattern' => '',
-   				'type' => 'string',
+				'label' => 'Parent',
+				'pattern' => '',
+				'type' => 'string',
 			)
 		);
 
@@ -195,8 +199,10 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 			array_push($data['rows'], $row);
 		}
 
-    	$this->_routeMatch->setResponseType('json');
-    	return $this->responseView('Teams_ViewPublic_Org_Json', '', $data);
+		$this->_routeMatch->setResponseType('json');
+		return $this->responseView('Teams_ViewPublic_Org_Json', '', $data);
+	}
+
 	public function actionRoleView()
 	{
 		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
