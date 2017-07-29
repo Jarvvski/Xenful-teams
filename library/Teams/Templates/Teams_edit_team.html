@@ -51,7 +51,11 @@
 
         <dl class="ctrlUnit submitUnit">
             <dt></dt>
-            <dd><input type="submit" value="Save team" class="button primary" accesskey="s" /></dd>
+            <dd><input type="submit" value="Save team" class="button primary" accesskey="s" />
+			<xen:if is="{$team.team_id}">
+				<a href="{xen:link 'team/delete', $team, 'team_id={$team.team_id}'}" type="button" class="button OverlayTrigger">Delete team...</a>
+			</xen:if>
+			</dd>
         </dl>
 
 		<input type="hidden" name="team_id" value="{$team.team_id}" />
