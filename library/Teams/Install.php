@@ -20,6 +20,7 @@ class Teams_Install {
 			`user_id` int(11) DEFAULT NULL,
 			`username` varchar(250) DEFAULT NULL,
 			`role_title` varchar(250) NOT NULL DEFAULT '',
+			`abreviation` varchar(250) NOT NULL DEFAULT '',
 			`managed_team_ids` varbinary(255) NOT NULL DEFAULT '',
 			`hierarchy` int(11) NOT NULL,
 			`primary` tinyint(4) NOT NULL,

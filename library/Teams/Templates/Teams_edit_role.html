@@ -20,6 +20,13 @@
         </dl>
 
         <dl class="ctrlUnit">
+            <dt><label for="ctrl_message"><b>Role abreviation</b></label></dt>
+            <dd>
+				<input id="ctrl_abreviation" type="text" class="textCtrl" name="abreviation" value="{$role.abreviation}" maxLength="4"/>
+			</dd>
+        </dl>
+
+        <dl class="ctrlUnit">
             <dt><label for="ctrl_message"><b>Username</b></label></dt>
             <dd>
 				<input id="ctrl_username" type="text" class="textCtrl AutoComplete AcSingle" name="username" value="{$role.username}"/>
@@ -80,7 +87,7 @@
 
         <dl class="ctrlUnit submitUnit">
             <dt></dt>
-            <dd><input type="submit" value="Create role" class="button primary" accesskey="s" />
+            <dd><input type="submit" value="Save data" class="button primary" accesskey="s" />
 			<xen:if is="{$role.role_id}">
 				<a href="{xen:link 'teams/role-delete', $role, 'role_id={$role.role_id}'}" type="button" class="button OverlayTrigger">Delete role...</a>
 			</xen:if></dd>

@@ -330,6 +330,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$input = $this->_input->filter(array(
 			'team_id' => XenForo_Input::UINT,
 			'role_title' => XenForo_Input::STRING,
+			'abreviation' => XenForo_Input::STRING,
 			'remark' => XenForo_Input::STRING,
 			'username' => XenForo_Input::STRING,
 			'hierarchy' => XenForo_Input::UINT,

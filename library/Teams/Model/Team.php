@@ -217,7 +217,8 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			{
 				$role['username'] = "Vacant";
 			}
-			$roleData .= "<tr><td>".$role['role_title']."</td><td>".$role['username']."</td></tr>";
+
+			$roleData .= "<tr><td>".$role['abreviation']."</td><td>".$role['username']."</td></tr>";
 		}
 
 		$data = "<h5>".$team['team_name']."</h5>
