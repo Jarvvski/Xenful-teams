@@ -1,0 +1,24 @@
+<xen:title>Delete team</xen:title>
+<xen:require css="delete_confirmation.css" />
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link full:team, $team}">{$team.team_name}</xen:breadcrumb>
+</xen:navigation>
+
+<form action="{xen:link 'team/delete'}" method="post" class="xenForm formOverlay deleteConfirmForm AutoValidator" data-redirect="{xen:if $isOverlay, no, yes}" data-reset="{xen:if $isOverlay, yes, no}">
+
+    <p>Please confirm that you wish to delete the following team</p>
+	<strong><a href="{xen:link 'team/view', '', 'team_id={$team.team_id}'}">{$team.team_name}</a></strong>
+
+    <dl class="ctrlUnit submitUnit">
+        <dt></dt>
+        <dd>
+			<input type="submit" value="{xen:phrase save_changes}" accesskey="s" class="button primary" />
+		</dd>
+    </dl>
+
+    <input type="hidden" name="team_id" value="{$team.team_id}" />
+
+    <input type="hidden" name="_xfConfirm" value="1" />
+    <input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>
