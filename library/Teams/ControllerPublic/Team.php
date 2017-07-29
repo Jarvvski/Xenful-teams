@@ -151,4 +151,9 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 			XenForo_Link::buildPublicLink('team/view?' . 'team_id=' . $team['team_id'])
 		);
 	}
+
+	public function actionDash()
+	{
+
+	}
 }
