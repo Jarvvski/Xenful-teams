@@ -9,7 +9,7 @@
 
 	<!-- Teams_edit_role -->
 
-	<form action="{xen:link team/save}" method="post" class="xenForm AutoValidator" onsubmit="return" data-redirect="on">
+	<form action="{xen:link teams/save}" method="post" class="xenForm AutoValidator" onsubmit="return" data-redirect="on">
         <h2 class="subHeading">Team details</h2>
 
         <dl class="ctrlUnit">
@@ -53,7 +53,7 @@
             <dt></dt>
             <dd><input type="submit" value="Save team" class="button primary" accesskey="s" />
 			<xen:if is="{$team.team_id}">
-				<a href="{xen:link 'team/delete', $team, 'team_id={$team.team_id}'}" type="button" class="button OverlayTrigger">Delete team...</a>
+				<a href="{xen:link 'teams/delete', $team, 'team_id={$team.team_id}'}" type="button" class="button OverlayTrigger">Delete team...</a>
 			</xen:if>
 			</dd>
         </dl>
