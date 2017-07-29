@@ -48,6 +48,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		return $this->_getDb()->fetchAll('
 			SELECT *
 			FROM xf_teams_teams
+			ORDER BY hierarchy
 		');
 	}
 
