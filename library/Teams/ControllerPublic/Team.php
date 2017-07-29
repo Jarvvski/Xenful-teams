@@ -292,23 +292,35 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function actionRoleDelete()
 	{
-		$this->_assertCanDeleteTeamData();
+
+		// TODO: create assertion for deletion of data
+		// $this->_assertCanDeleteTeamData();
+
+		$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
+		$role = $this->_getTeamRoleOrError($roleId);
 
 		if ($this->isConfirmedPost())
 		{
-			return $this->_deleteData(
-				'Teams_DataWriter_Role', 'role_id',
-				XenForo_Link::buildPublicLink('teams')
+			$dw = XenForo_DataWriter::create('Teams_DataWriter_Role');
+			$dw->setExistingData($role['role_id']);
+
+			$dw->delete();
+
+			XenForo_Model_Log::logModeratorAction(
+				'role', $role, 'removed', array(), $role
+			);
+
+			return $this->responseRedirect(
+				XenForo_ControllerResponse_Redirect::SUCCESS,
+				XenForo_Link::buildPublicLink('teams/org')
 			);
 		} else {
-			$roleId = $this->_input->filterSingle('role_id', XenForo_Input::UINT);
-			$role = $this->_getTeamRoleOrError($roleId);
 
 			$viewParams = array(
 				'role' => $role
 			);
 
-			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_delete', $viewParams);
+			return $this->responseView('Teams_ViewPublic_Delete', 'Teams_role_delete', $viewParams);
 		}
 	}
 
