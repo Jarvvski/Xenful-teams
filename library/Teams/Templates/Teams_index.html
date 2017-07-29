@@ -1,0 +1,29 @@
+<!-- Includes Begin -->
+
+<!-- Includes End   -->
+
+<xen:topctrl>
+	<a href="{xen:link teams/team-create}" class="button">+ Create Team</a>
+</xen:topctrl>
+
+
+<xen:title>Team Index</xen:title>
+<div class="section">
+    <xen:title>Team Index</xen:title>
+	<xen:if is="{$teams} != null">
+
+		<xen:foreach loop="{$teams}" key="{$teamId}" value="{$team}">
+			{$team.team_name}
+			<xen:if is="{$team.roles} != null">
+				<xen:foreach loop="{$team.roles}" key="{$roleId}" value="{$role}">
+					{$role.role_title} <br/> {$role.username}
+				</xen:foreach>
+			<xen:else/>
+				<h1>No roles found</h1>
+			</xen:if>
+		</xen:foreach>
+	<xen:else/>
+		<h1>No teams found</h1>
+	</xen:if>
+</div>
+<br />
