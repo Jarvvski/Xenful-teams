@@ -176,7 +176,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		$viewParams = array(
 			'teams' => $teams
 		);
-		
+
 		return $this->responseView('Teams_ViewPublic_index', 'Teams_index', $viewParams);
 	}
 

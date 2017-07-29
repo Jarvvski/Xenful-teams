@@ -4,26 +4,26 @@ class Teams_Model_Team extends Teams_Model_Abstract
 {
 
 	/**
-	 * Get a single team for a given teamID
-	 *
-	 * @param  int $teamId
-	 * @return array/data obj
-	 */
+	* Get a single team for a given teamID
+	*
+	* @param  int $teamId
+	* @return array/data obj
+	*/
 	public function getTeamByIdSimple($teamId)
 	{
 		return $this->_getDb()->fetchRow('
-			SELECT *
-			FROM xf_teams_teams
-			WHERE team_id = ' .$this->_getDb()->quote($teamId) .'
+		SELECT *
+		FROM xf_teams_teams
+		WHERE team_id = ' .$this->_getDb()->quote($teamId) .'
 		');
 	}
 
 	/**
-	 * Gets an array of teams from an array of teamIDs
-	 *
-	 * @param  array  $teamIds collection of teamIDs (ints)
-	 * @return array  Collection of Teams with corresponding data
-	 */
+	* Gets an array of teams from an array of teamIDs
+	*
+	* @param  array  $teamIds collection of teamIDs (ints)
+	* @return array  Collection of Teams with corresponding data
+	*/
 	public function getTeamsByID(array $teamIds)
 	{
 		if (!$teamIds)
@@ -32,32 +32,32 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		}
 
 		return $this->fetchAllKeyed('
-			SELECT *
-			FROM xf_teams_teams
-			WHERE team_id IN (' .$this->_getDb()->quote($teamIds) .')
+		SELECT *
+		FROM xf_teams_teams
+		WHERE team_id IN (' .$this->_getDb()->quote($teamIds) .')
 		', 'team_id');
 	}
 
 	/**
-	 * Gets all current Teams on the ADR
-	 *
-	 * @return array  Collection of all team Data
-	 */
+	* Gets all current Teams on the ADR
+	*
+	* @return array  Collection of all team Data
+	*/
 	public function getAllTeams()
 	{
 		return $this->_getDb()->fetchAll('
-			SELECT *
-			FROM xf_teams_teams
-			ORDER BY hierarchy
+		SELECT *
+		FROM xf_teams_teams
+		ORDER BY hierarchy
 		');
 	}
 
 	public function getBaseTeams()
 	{
 		return $this->_getDb()->fetchAll('
-			SELECT *
-			FROM xf_teams_teams
-			WHERE parent_id = 0
+		SELECT *
+		FROM xf_teams_teams
+		WHERE parent_id = 0
 		');
 	}
 
@@ -69,18 +69,18 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		}
 
 		return $this->_getDb()->fetchAll('
-			SELECT *
-			FROM xf_teams_teams
-			WHERE parent_id = ' . $this->_getDb()->quote($team['team_id']). '
-			ORDER BY hierarchy ASC
+		SELECT *
+		FROM xf_teams_teams
+		WHERE parent_id = ' . $this->_getDb()->quote($team['team_id']). '
+		ORDER BY hierarchy ASC
 		');
 	}
 
 	/**
-	 * Prepare Team for sending and add to cache
-	 * @param  array/data Obj  $team
-	 * @return array  team prepared
-	 */
+	* Prepare Team for sending and add to cache
+	* @param  array/data Obj  $team
+	* @return array  team prepared
+	*/
 	public function prepareTeam(&$team)
 	{
 		$team['roles'] = $this->getRolesByTeam($team);
@@ -88,32 +88,32 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	}
 
 	/**
-	 * Get team members via the team they are in
-	 *
-	 * @param  int  $teamId
-	 * @return array  Users contained in role of given team
-	 */
+	* Get team members via the team they are in
+	*
+	* @param  int  $teamId
+	* @return array  Users contained in role of given team
+	*/
 	public function getTeamMembersByTeamId($teamId)
 	{
 		// TODO: might need to include roles for each member
 		// - maybe sepperate function
 
 		return $this->_getDb()->fetchAll('
-			SELECT role.*, user.username,
-				user.avatar_date, user.gravatar
-			FROM xf_teams_roles AS role
-			INNER JOIN xf_user AS user ON (user.user_id = role.user_id)
-			WHERE role.team_id = ' . $this->_getDb()->quote($teamId). '
-			ORDER BY role.hierarchy ASC
+		SELECT role.*, user.username,
+		user.avatar_date, user.gravatar
+		FROM xf_teams_roles AS role
+		INNER JOIN xf_user AS user ON (user.user_id = role.user_id)
+		WHERE role.team_id = ' . $this->_getDb()->quote($teamId). '
+		ORDER BY role.hierarchy ASC
 		');
 	}
 
 	/**
-	 * Gets roles availible in team
-	 *
-	 * @param  array
-	 * @return [type]         [description]
-	 */
+	* Gets roles availible in team
+	*
+	* @param  array
+	* @return [type]         [description]
+	*/
 	public function getRolesByTeam(array $team)
 	{
 		// TODO: get all roles in team
@@ -126,19 +126,19 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		// return $this->getTeamMembersByTeamId($team['team_id']);
 
 		$roles = $this->_getDb()->fetchAll('
-					SELECT *
-					FROM xf_teams_roles
-					WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
+		SELECT *
+		FROM xf_teams_roles
+		WHERE team_id = '.$this->_getDb()->quote($team['team_id']).'
 		');
 
 		return $this->_getRoleModel()->prepareRoles($roles);
 	}
 
 	/**
-	 * Delets a user from a team via removal of role
-	 * @param  int $teamId
-	 * @return [type]         [description]
-	 */
+	* Delets a user from a team via removal of role
+	* @param  int $teamId
+	* @return [type]         [description]
+	*/
 	public function deleteTeamUser($teamId)
 	{
 		$roles = $this->getrolesByTeamId($teamId);
@@ -153,55 +153,55 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	}
 
 	/**
-	 * Gets the primary team for a given user
-	 *
-	 * @param int  $userId
-	 * @return array team data
-	 */
+	* Gets the primary team for a given user
+	*
+	* @param int  $userId
+	* @return array team data
+	*/
 	public function getPrimaryTeamByUser($userId)
 	{
 		return $this->_getDb()->fetchRow('
-			SELECT teams.*
-			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_role AS role
-			ON role.team_id = teams.team_id
-			WHERE role.user_id = '.$this->_getDb()->quote($userId).'
-			AND role.primary = TRUE
+		SELECT teams.*
+		FROM xf_teams_teams AS teams
+		INNER JOIN xf_teams_role AS role
+		ON role.team_id = teams.team_id
+		WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+		AND role.primary = TRUE
 		');
 	}
 
 	/**
-	 * Gets all the non-primary teams a given user
-	 *
-	 * @param  int  $userId
-	 * @return array of team arrays (2d)
-	 */
+	* Gets all the non-primary teams a given user
+	*
+	* @param  int  $userId
+	* @return array of team arrays (2d)
+	*/
 	public function getNotPrimaryTeamsByUser($userId)
 	{
 		return $this->fetchAllKeyed('
-			SELECT teams.*
-			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_role AS role
-			ON role_id = teams.role_id
-			WHERE role.user_id = '.$this->_getDb()->quote($userId).'
-			AND role.primary = FALSE
+		SELECT teams.*
+		FROM xf_teams_teams AS teams
+		INNER JOIN xf_teams_role AS role
+		ON role_id = teams.role_id
+		WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+		AND role.primary = FALSE
 		');
 	}
 
 	/**
-	 * Gets all teams except for those of a given user
-	 *
-	 * @param  [type] $userId [description]
-	 * @return [type]         [description]
-	 */
+	* Gets all teams except for those of a given user
+	*
+	* @param  [type] $userId [description]
+	* @return [type]         [description]
+	*/
 	public function getNonUserTeams($userId)
 	{
 		return $this->fetchAllKeyed('
-			SELECT teams.*
-			FROM xf_teams_teams AS teams
-			INNER JOIN xf_teams_role AS role
-			on role_id = teams.role_id
-			WHERE role.user_id != '.$this->_getDb()->quote($userId).'
+		SELECT teams.*
+		FROM xf_teams_teams AS teams
+		INNER JOIN xf_teams_role AS role
+		on role_id = teams.role_id
+		WHERE role.user_id != '.$this->_getDb()->quote($userId).'
 		');
 	}
 
@@ -221,14 +221,14 @@ class Teams_Model_Team extends Teams_Model_Abstract
 		}
 
 		$data = "<h5>".$team['team_name']."</h5>
-			<table>
-				<tr>
+		<table>
+		<tr>
 
-				</tr>
-				".
-				$roleData
-				."
-			</table>
+		</tr>
+		".
+		$roleData
+		."
+		</table>
 		";
 
 		$row = array(

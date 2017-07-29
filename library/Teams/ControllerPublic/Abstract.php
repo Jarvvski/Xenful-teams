@@ -3,11 +3,11 @@
 class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 {
 	/**
-	 *	Checks if user has perms
-	 *
-	 * @param  [type] $action [description]
-	 * @return [type]         [description]
-	 */
+	*	Checks if user has perms
+	*
+	* @param  [type] $action [description]
+	* @return [type]         [description]
+	*/
 	protected function _preDispatchFirst($action)
 	{
 		// TODO: commented out for debug
@@ -23,11 +23,11 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	}
 
 	/**
-	 * Gets the team or error
-	 *
-	 * @param  int $teamId
-	 * @return [type]         [description]
-	 */
+	* Gets the team or error
+	*
+	* @param  int $teamId
+	* @return [type]         [description]
+	*/
 	protected function _getTeamOrError($teamId) {
 		$team = $this->_getTeamModel()->getTeamByIdSimple($teamId);
 
@@ -39,10 +39,10 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	}
 
 	/**
-	 * Gets the team role or error
-	 * @param  int $roleId
-	 * @return [type]         [description]
-	 */
+	* Gets the team role or error
+	* @param  int $roleId
+	* @return [type]         [description]
+	*/
 	protected function _getTeamRoleOrError($roleId)
 	{
 		$role  = $this->_getRoleModel()->getRoleByIdSimple($roleId);
@@ -55,12 +55,12 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	}
 
 	/**
-	 * Gets a user via a user array containing either the username index
-	 * or the user_id index
-	 *
-	 * @param  array $input an incomplete user record
-	 * @return array        a complete user record
-	 */
+	* Gets a user via a user array containing either the username index
+	* or the user_id index
+	*
+	* @param  array $input an incomplete user record
+	* @return array        a complete user record
+	*/
 	protected function _getUserOrError(array $input)
 	{
 		if ($input['username'])
@@ -108,40 +108,40 @@ class Teams_ControllerPublic_Abstract extends XenForo_ControllerPublic_Abstract
 	}
 
 	/**
-	 * @return Teams_Model_Team
-	 */
+	* @return Teams_Model_Team
+	*/
 	protected function _getTeamModel()
 	{
 		return $this->getModelFromCache('Teams_Model_Team');
 	}
 
 	/**
-	 * @return Teams_Model_Role
-	 */
+	* @return Teams_Model_Role
+	*/
 	protected function _getRoleModel()
 	{
 		return $this->getModelFromCache('Teams_Model_Role');
 	}
 
 	/**
-	 * @return XenForo_Model_User
-	 */
+	* @return XenForo_Model_User
+	*/
 	protected function _getUserModel()
 	{
 		return $this->getModelFromCache('XenForo_Model_User');
 	}
 
 	/**
-	 * @return XenForo_Model_UserGroup
-	 */
+	* @return XenForo_Model_UserGroup
+	*/
 	protected function _getUserGroupModel()
 	{
 		return $this->getModelFromCache('XenForo_Model_UserGroup');
 	}
 
 	/**
-	 * @return XenForo_ControllerHelper_Editor
-	 */
+	* @return XenForo_ControllerHelper_Editor
+	*/
 	protected function _getEditorHelper()
 	{
 		return $this->getHelper('Editor');
