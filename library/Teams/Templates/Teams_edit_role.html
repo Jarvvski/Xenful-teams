@@ -80,7 +80,10 @@
 
         <dl class="ctrlUnit submitUnit">
             <dt></dt>
-            <dd><input type="submit" value="Create role" class="button primary" accesskey="s" /></dd>
+            <dd><input type="submit" value="Create role" class="button primary" accesskey="s" />
+			<xen:if is="{$role.role_id}">
+				<a href="{xen:link 'teams/role-delete', $role, 'role_id={$role.role_id}'}" type="button" class="button OverlayTrigger">Delete role...</a>
+			</xen:if></dd>
         </dl>
 
 		<input type="hidden" name="role_id" value="{$role.role_id}" />
