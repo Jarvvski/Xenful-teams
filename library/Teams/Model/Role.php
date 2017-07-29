@@ -76,7 +76,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 		');
 	}
 
-	public function prepareRoles(array $roles)
+	public function prepareRoles(array &$roles)
 	{
 		foreach ($roles as $role)
 		{
