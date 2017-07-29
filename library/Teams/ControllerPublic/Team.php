@@ -20,6 +20,11 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 		}
 	}
 
+	public function actionIndex()
+	{
+		return $this->responseReroute(__CLASS__, 'list');
+	}
+
 	public function actionTeamView()
 	{
 		$teamModel = $this->_getTeamModel();
@@ -154,12 +159,46 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function actionDash()
 	{
-		// TODO: action for displaying user graph
+		// TODO: action for displaying user specific team information
 	}
 
 	public function actionList()
 	{
 		// TODO: action for displaying vertical list of ADR similar to older -v
+
+		// 1. Get Base node
+		// 2. Follow children in order of hierarchy
+
+		$teams = array();
+
+		$base = $this->_getTeamModel()->getBaseTeam();
+
+		$this->sortChildren($base, $teams);
+
+		$viewParams = array(
+			'teams' => $teams
+		);
+
+		// $this->_routeMatch->setResponseType('json');
+		// return $this->responseView('Teams_ViewPublic_Org_Json', '', $teams);
+		return $this->responseView('Teams_ViewPublic_index', 'Teams_index', $viewParams);
+	}
+
+	public function sortChildren(array $team, array &$teams)
+	{
+		$bottom = false;
+		$team = $this->_getTeamModel()->prepareTeam($team);
+		array_push($teams, $team);
+		$children = $this->_getTeamModel()->getChildren($team);
+
+		if (!empty($children))
+		{
+			foreach($children as $child)
+			{
+				$this->sortChildren($child, $teams);
+			}
+		}
+		return $teams;
 	}
 
 	public function actionOrg()
