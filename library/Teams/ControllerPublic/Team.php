@@ -179,7 +179,6 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 
 	public function sortChildren(array $team, array &$teams)
 	{
-		$bottom = false;
 		$team = $this->_getTeamModel()->prepareTeam($team);
 		array_push($teams, $team);
 		$children = $this->_getTeamModel()->getChildren($team);
