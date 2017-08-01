@@ -105,4 +105,23 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			WHERE id = ' .$this->_getDb()->quote($Id) .'
 			');			
 		}
+
+			public function getTeamByRole(array $role)
+			{
+
+				if (!$role)
+				{
+					return array();
+				}
+
+				return $this->_getDb()->fetchRow('
+				SELECT *
+				FROM xf_teams_teams
+				WHERE team_id = (
+					SELECT team_id
+					FROM xf_teams_roles
+					WHERE role_id = '.$this->_getDb()->quote($role['role_id'])'
+				)
+				');
+			}
 	}
