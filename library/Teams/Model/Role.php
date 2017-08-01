@@ -97,13 +97,29 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			return $role;
 		}
 
+		public function getPrimaryRoleByUser(array $user)
+		{
+
+			if (!$user)
+			{
+				return array();
+			}
+
+			return $this->_getDb()->fetchRow('
+			SELECT *
+			FROM xf_teams_roles
+			WHERE user_id = '.$this->_getDb()->quote($user['user_id'])'
+			AND primary = TRUE
+			');
+		}
+
 		public function getBluePrintByIdSimple($id)
 		{
 			return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_blueprint_role
 			WHERE id = ' .$this->_getDb()->quote($Id) .'
-			');			
+			');
 		}
 
 			public function getTeamByRole(array $role)
