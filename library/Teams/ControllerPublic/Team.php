@@ -157,6 +157,27 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 	public function actionDash()
 	{
 		// TODO: action for displaying user specific team information
+
+		$user = XenForo_Visitor::getInstance()->toArray();
+
+		$primaryRole = $this->_getRoleModel()->getPrimaryRoleByUser($user);
+
+		if (!$primaryRole) {
+			$primaryTeam = array();
+		} else {
+			$primaryTeam = $this->_getRoleModel()->getTeamByRole($primaryRole);
+			$this->_getTeamModel()->prepareTeam($primaryTeam);
+		}
+
+		$otherTeams = $this->_getTeamModel()->getNotPrimaryTeamsByUser($user);
+
+		$viewParams = array(
+			'primaryTeam' => $primaryTeam,
+			'primaryRole' => $primaryRole,
+			'otherTeams' => $otherTeams
+		);
+
+		return $this->responseView('Teams_ViewPublic_Dash', 'Teams_dash', $viewParams);
 	}
 
 	public function actionList()
