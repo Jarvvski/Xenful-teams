@@ -108,8 +108,8 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_roles
-			WHERE user_id = '.$this->_getDb()->quote($user['user_id'])'
-			AND primary = TRUE
+			WHERE user_id = '.$this->_getDb()->quote($user['user_id']).'
+			AND `primary` = 1
 			');
 		}
 
@@ -118,7 +118,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 			return $this->_getDb()->fetchRow('
 			SELECT *
 			FROM xf_teams_blueprint_role
-			WHERE id = ' .$this->_getDb()->quote($Id) .'
+			WHERE id = ' .$this->_getDb()->quote($Id).'
 			');
 		}
 
@@ -136,7 +136,7 @@ class Teams_Model_Role extends Teams_Model_Abstract
 				WHERE team_id = (
 					SELECT team_id
 					FROM xf_teams_roles
-					WHERE role_id = '.$this->_getDb()->quote($role['role_id'])'
+					WHERE role_id = '.$this->_getDb()->quote($role['role_id']).'
 				)
 				');
 			}
