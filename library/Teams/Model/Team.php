@@ -158,14 +158,19 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	* @param int  $userId
 	* @return array team data
 	*/
-	public function getPrimaryTeamByUser($userId)
+	public function getPrimaryTeamByUser(array $user)
 	{
+		if (!$user)
+		{
+			return array();
+		}
+
 		return $this->_getDb()->fetchRow('
 		SELECT teams.*
 		FROM xf_teams_teams AS teams
 		INNER JOIN xf_teams_role AS role
 		ON role.team_id = teams.team_id
-		WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+		WHERE role.user_id = '.$this->_getDb()->quote($user['user_id']).'
 		AND role.primary = TRUE
 		');
 	}
@@ -176,14 +181,19 @@ class Teams_Model_Team extends Teams_Model_Abstract
 	* @param  int  $userId
 	* @return array of team arrays (2d)
 	*/
-	public function getNotPrimaryTeamsByUser($userId)
+	public function getNotPrimaryTeamsByUser(array $user)
 	{
-		return $this->fetchAllKeyed('
+		if (!$user)
+		{
+			return array();
+		}
+
+		return $this->_getDb()->fetchAll('
 		SELECT teams.*
 		FROM xf_teams_teams AS teams
-		INNER JOIN xf_teams_role AS role
-		ON role_id = teams.role_id
-		WHERE role.user_id = '.$this->_getDb()->quote($userId).'
+		INNER JOIN xf_teams_roles AS role
+		ON role.team_id = teams.team_id
+		WHERE role.user_id = '.$this->_getDb()->quote($user['user_id']).'
 		AND role.primary = FALSE
 		');
 	}
@@ -221,7 +231,7 @@ class Teams_Model_Team extends Teams_Model_Abstract
 			$roleData .= "<tr><td>".$role['abreviation']."</td><td>".$role['username']."</td></tr>";
 		}
 
-		$data = "<h5>".$team['team_name']."</h5>
+		$data = "<h5><a href='teams/team-view?team_id=".$team['team_id']."'>".$team['team_name']."</a></h5>
 		<table>
 		<tr>
 
