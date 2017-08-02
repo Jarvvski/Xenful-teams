@@ -1,0 +1,49 @@
+<!-- Includes Begin -->
+<xen:require css="CavTools_TigCheck.css" />
+<!-- Includes End   -->
+
+
+<xen:title>Your dashboard</xen:title>
+<div class="section">
+	<dl class="ctrlUnit">
+		<xen:if is="{$primaryTeam}">
+		<h2 class="subHeading">{$primaryTeam.team_name}</h2>
+			<table class="tigCheck">
+				<tr>
+					<th>
+						Position
+					</th>
+					<th>
+						Username
+					</th>
+					<th>
+						Remark
+					</th>
+				</tr>
+				<xen:foreach loop="{$primaryTeam.roles}" key="{$roleId}" value="{$role}">
+					<tr>
+						<td>
+							<a href="{xen:link 'teams/role-edit', '', 'role_id={$role.role_id}'}">{xen:raw $role.role_title}</a>
+						</td>
+						<td>
+							<xen:if is="{$role.username} == ''">
+								Un-assigned
+							<xen:else/>
+								{xen:raw $role.username}
+							</xen:if>
+						</td>
+						<td>
+							{xen:raw $role.remark}
+						</td>
+					</tr>
+				</xen:foreach>
+			</table>
+		<xen:else/>
+			<xen:if is="{$primaryTeam.team_name}">
+				<h1>No roles found for {$primaryTeam.team_name}</h1>
+			<xen:else />
+				<h1>No primary Team found</h1>
+			</xen:if>
+		</xen:if>
+	</dl>
+</div>
