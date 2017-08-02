@@ -2,7 +2,7 @@
 
 class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 {
-
+//test again
 	protected function _preDispatch($action)
 	{
 		// TODO: Chekc if we can abstract out models to this level?
@@ -18,6 +18,7 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 			// code to be run before actionEdit()
 			break;
 		}
+		//test
 	}
 
 	public function actionIndex()
