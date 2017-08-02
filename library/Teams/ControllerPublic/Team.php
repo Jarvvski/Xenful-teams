@@ -18,7 +18,6 @@ class Teams_ControllerPublic_Team extends Teams_ControllerPublic_Abstract
 			// code to be run before actionEdit()
 			break;
 		}
-		//test
 	}
 
 	public function actionIndex()
